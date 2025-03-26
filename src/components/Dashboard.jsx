@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import './style.css'
 import { Link } from 'react-router-dom';
@@ -14,7 +14,6 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const Dashboard = () => {
 
-
     return (
         <div>
   <div style={{ position: "relative", width: "100vw", height: "100vh", overflow: "hidden" }}>
@@ -27,18 +26,9 @@ const Dashboard = () => {
         /></Link>
     
     {/* Signi Form */}
-    <div style={{
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)", // Adds a semi-transparent white background
-      padding: "0",
-      borderRadius: "10px",
-      boxShadow: "0px 4px 10px rgba(0,0,0,0.3)",
-      zIndex: 10,
-      width:"60%",
-      height:"fit-content"
-    }}>jj
+    <div className='freedo'><div>
+    <h1>Welcome { "Guest"}!</h1>
+</div>
       
     </div>
   </div>

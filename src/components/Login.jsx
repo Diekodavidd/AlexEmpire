@@ -20,23 +20,36 @@ const Login = () => {
     });
     
     const navigate = useNavigate(); // Hook to navigate to other pages
+    const [loading, setLoading] = useState(false); // Add loading state
+    
 
     const LoginCustomer = async () => {
         try {
-            const response = await axios.post("https://backend-details-0xik.onrender.com/customer/login", userDetails);
+            setLoading(true);
+    
+            const response = await axios.post(
+                "https://backend-details-0xik.onrender.com/customer/login",
+                userDetails
+            );
+    
             console.log(response.data);
+    
             if (response.data.status) {
                 alert("Login successful");
                 navigate("/dash"); // Redirect to login page
-                // Redirect user or store token if needed
+
             } else {
                 alert(response.data.message);
             }
         } catch (error) {
             console.error("Login Error:", error);
             alert("An error occurred. Please try again.");
+        } finally {
+            setLoading(false);
         }
     };
+    
+    
 
     return (
         <div>
@@ -50,18 +63,7 @@ const Login = () => {
         /></Link>
     
     {/* Signi Form */}
-    <div style={{
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)", // Adds a semi-transparent white background
-      padding: "0",
-      borderRadius: "10px",
-      boxShadow: "0px 4px 10px rgba(0,0,0,0.3)",
-      zIndex: 10,
-      width:"60%",
-      height:"fit-content"
-    }}>
+    <div className='freedo'>
      
         <section className="signin">
             <div className="container">
@@ -97,7 +99,12 @@ const Login = () => {
           borderRadius: "5px",
           cursor: "pointer",
           fontWeight: "bold"
-        }} onClick={LoginCustomer}  type="button" data-mdb-button-init data-mdb-ripple-init className="btn btn-primary btn-lg">Login</button>
+        }} onClick={LoginCustomer}  type="button" data-mdb-button-init data-mdb-ripple-init className="btn btn-primary btn-lg"  disabled={loading}>
+             {loading ? (
+            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          ) : (
+            "Login"
+          )}</button>
                                </div>
                             </div>
                         </form>

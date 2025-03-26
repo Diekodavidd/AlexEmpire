@@ -23,13 +23,14 @@ const Signup = () => {
   const [showModal, setShowModal] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const navigate = useNavigate(); // Hook to navigate to other pages
+  const [loading, setLoading] = useState(false); // Add loading state
 
   const RegisterUser = () => {
     if (!agreed) {
       alert("You must agree to the Terms and Conditions to register.");
       return;
     }
-
+    setLoading(true); // Start loading
     console.log(userDetail);
     axios
       .post("https://backend-details-0xik.onrender.com/customer/signup", userDetail)
@@ -40,6 +41,9 @@ const Signup = () => {
       })
       .catch((err) => {
         console.log(err);
+        alert("Something went wrong. Please try again.");
+      }).finally(() => {
+        setLoading(false); // Stop loading when request finishes
       });
   };
 
@@ -54,17 +58,7 @@ const Signup = () => {
                 /></Link>
 
         <div
-          style={{
-            position: "absolute",
-            top: "45%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            padding: "20px",
-            borderRadius: "10px",
-            boxShadow: "0px 4px 10px rgba(0,0,0,0.3)",
-            zIndex: 10,
-            width: "60%",
-          }}
+          className="hurts"
         >
           <section className="signup">
             <div className="container">
@@ -152,8 +146,13 @@ const Signup = () => {
                         onClick={RegisterUser}
                         type="button"
                         className="btn btn-primary btn-lg"
+                        disabled={loading} // Disable button when loading
                       >
-                        Register
+                         {loading ? (
+    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  ) : (
+    "Register"
+  )}
                       </button>
                     </div>
                   </form>
@@ -173,28 +172,46 @@ const Signup = () => {
       </div>
 
       {/* Terms and Conditions Modal */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} size="lg">
+      <Modal show={showModal} onHide={() => setShowModal(false) } size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Terms & Conditions</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente
-            consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.
-          </p>
+            I must Love The BRAND
+             </p>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente
-            consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.
-          </p>
+          I must Love The BRAND</p>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente
-            consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.
-          </p>
+          I must Love The BRAND
+            </p>
+            <p>
+            I must Love The BRAND
+             </p>
+          <p>
+          I must Love The BRAND</p>
+          <p>
+          I must Love The BRAND
+            </p>
+            <p>
+            I must Love The BRAND
+             </p>
+          <p>
+          I must Love The BRAND</p>
+          <p>
+          I must Love The BRAND
+            </p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={() => setShowModal(false)}>
-            I Agree
-          </Button>
+        <Button 
+  variant="primary"  
+  onClick={() => {
+    setShowModal(false);
+    setAgreed(!agreed);
+  }}
+>
+  I Agree
+</Button>
         </Modal.Footer>
       </Modal>
     </div>
