@@ -14,6 +14,11 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const Dashboard = () => {
 
+     // Safely retrieve existingCustomer from localStorage
+  const storedCustomer = localStorage.getItem("existingCustomer")
+  ? JSON.parse(localStorage.getItem("existingCustomer"))
+  : null;
+
     return (
         <div>
   <div style={{ position: "relative", width: "100vw", height: "100vh", overflow: "hidden" }}>
@@ -27,7 +32,7 @@ const Dashboard = () => {
     
     {/* Signi Form */}
     <div className='freedo'><div>
-    <h1>Welcome { "Guest"}!</h1>
+     <h1>Welcome {storedCustomer ? storedCustomer.firstname : "Guest"}!</h1>
 </div>
       
     </div>

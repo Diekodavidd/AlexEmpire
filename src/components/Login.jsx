@@ -33,7 +33,12 @@ const Login = () => {
             );
     
             console.log(response.data);
+            console.log(response.data.existingCustomer);
+
+            let damm = response.data.existingCustomer
     
+            
+            localStorage.setItem("existingCustomer", JSON.stringify(damm));
             if (response.data.status) {
                 alert("Login successful");
                 navigate("/dash"); // Redirect to login page
