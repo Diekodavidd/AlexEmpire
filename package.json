@@ -16,11 +16,13 @@
     "@mui/material": "^6.4.8",
     "axios": "^1.8.4",
     "bootstrap": "^5.3.3",
+    "formik": "^2.4.6",
     "material-design-iconic-font": "^2.2.0",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.4.0"
+    "react-router-dom": "^7.4.0",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

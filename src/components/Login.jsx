@@ -9,6 +9,8 @@ import './logi.css';
 import BouncingBalls from "./BouncingBalls";
 import LockIcon from "@mui/icons-material/Lock";
 import EmailIcon from "@mui/icons-material/Email";
+import { useFormik } from 'formik'
+import * as yup from 'yup'
 
 
 const Login = () => {
@@ -20,6 +22,21 @@ const Login = () => {
     const navigate = useNavigate(); // Hook to navigate to other pages
     const [loading, setLoading] = useState(false); // Add loading state
 
+    const commerceFormik = useFormik({
+        initialValues: {
+            your_name: "",
+            your_pass: ""
+        },
+        validationSchema: yup.object({
+            your_name: yup.string().email("must be a valid email").required("email cannot be empty"),
+            your_pass: yup.string().required("password cannot be empty"),
+        }),
+        onSubmit: (value) => {
+            console.log(value)
+        }
+    })
+    console.log(commerceFormik.errors);
+    console.log(commerceFormik.touched);
 
     const LoginCustomer = async () => {
         try {
@@ -80,13 +97,41 @@ const Login = () => {
                                 <div className="signin-form">
                                     <h2 className="form-title">Log In</h2>
                                     <form method="POST" className="register-form" id="login-form">
+                                        
+                                    <div style={{ color: "red" }}>
+                                                {commerceFormik.touched.your_name && commerceFormik.errors.your_name ? commerceFormik.errors.your_name : ""}
+                                            </div>  
                                         <div className="form-group">
                                             <label htmlFor="email"><EmailIcon /></label>
-                                            <input type="email" onChange={(e) => setUserDetails({ ...userDetails, email: e.target.value })} name="your_name" id="your_name" placeholder="Your Email" />
+                                            <input type="email" 
+                                            name="your_name"
+                                             id="your_name"
+                                              placeholder="Your Email"
+                                              value={commerceFormik.values.your_name}
+                                              onChange={(e) => {
+                                                  commerceFormik.handleChange(e); // commerceFormik handles state update
+                                                  setUserDetails((prev) => ({ ...prev, email: e.target.value })); // Local state update
+                                              }}
+                                              onBlur={commerceFormik.handleBlur} 
+                                              />   
                                         </div>
+                                        
+                                            <div style={{ color: "red" }}>
+                                                {commerceFormik.touched.your_pass && commerceFormik.errors.your_pass ? commerceFormik.errors.your_pass : ""}
+                                            </div>
                                         <div className="form-group">
                                             <label htmlFor="pass"><LockIcon /></label>
-                                            <input type="password" onChange={(e) => setUserDetails({ ...userDetails, Password: e.target.value })} name="your_pass" id="your_pass" placeholder="Password" />
+                                            <input type="password"
+                                                name="your_pass"
+                                                id="your_pass"
+                                                placeholder="Password"
+                                                value={commerceFormik.values.your_pass}
+                                                onChange={(e) => {
+                                                    commerceFormik.handleChange(e); // commerceFormik handles state update
+                                                    setUserDetails((prev) => ({ ...prev, Password: e.target.value })); // Local state update
+                                                }}
+                                                onBlur={commerceFormik.handleBlur} //
+                                            />
                                         </div>
                                         <div className="form-group">
                                             <input type="checkbox" name="remember-me" id="remember-me" className="agree-term" />
