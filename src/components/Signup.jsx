@@ -15,17 +15,6 @@ import { useFormik } from 'formik'
 import * as yup from 'yup'
 
 const Signup = () => {
-  const [userDetail, setUserDetail] = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
-    Password: "",
-  });
-
-  const [showModal, setShowModal] = useState(false);
-  const [agreed, setAgreed] = useState(false);
-  const navigate = useNavigate(); // Hook to navigate to other pages
-  const [loading, setLoading] = useState(false); // Add loading state
 
   const commerceFormik = useFormik({
     initialValues: {
@@ -46,6 +35,20 @@ const Signup = () => {
   })
   console.log(commerceFormik.errors);
   console.log(commerceFormik.touched);
+  
+  const [userDetail, setUserDetail] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    Password: "",
+  });
+
+  const [showModal, setShowModal] = useState(false);
+  const [agreed, setAgreed] = useState(false);
+  const navigate = useNavigate(); // Hook to navigate to other pages
+  const [loading, setLoading] = useState(false); // Add loading state
+
+  
 
   const RegisterUser = () => {
     if (!agreed) {

@@ -57,7 +57,7 @@ const Login = () => {
             localStorage.setItem("existingToke", damme);//save the user token in respose to local storage
             if (response.data.status) {
                 alert("Login successful");
-                navigate("/dash"); // Redirect to login page
+                navigate("/dash2"); // Redirect to login page
 
             } else {
                 alert(response.data.message);
