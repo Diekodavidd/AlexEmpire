@@ -92,7 +92,7 @@ const Dashboard2 = () => {
               style={{
                 position: "absolute",
                 top: "100%",
-                left: 170,
+                left: 230,
                 color: "white",
                 fontSize: "16px",
                 background: "gold",
@@ -123,16 +123,16 @@ const Dashboard2 = () => {
             <h2 style={{color:"white"}}>Available Products</h2>
             <div className='products-content'>
 {products.map((product) => (
-  <div key={product._id} className="products-box">
+  <div key={product._id} className="product-box">
     <Link to={`/product/${product._id}`} style={{ textDecoration: "none", color: "inherit" }}>
       <div className="img-box">
         {product.imageUrl?.length > 0 && (
-          <img src={product.imageUrl[0]} alt={product.name} style={{ width: "150px" }} />
+          <img src={product.imageUrl[0]} alt={product.name} />
         )}
       </div>
-      <h2 className="products-title">{product.name}</h2>
-      <p className="products-titlep">{product.description}</p>
-      <div className="price-and-btn">
+      <div className='daq'><h2 className="product-title">{product.name}</h2></div>
+      {/* <p className="products-titlep">{product.description}</p> */}
+      <div className="price-and-cart">
         <span className="price">{product.price}</span>
         <button className='add-cart'>View</button>
       </div>
