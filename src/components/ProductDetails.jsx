@@ -6,9 +6,10 @@ import BouncingBalls from "./BouncingBalls";
 import axios from "axios";
 import logo from "../assets/lyom.png";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AnimatedBackgrounds from "./Amiatio";
 
 
-const ProductDetails = () => { 
+const ProductDetails = () => {
     // Safely retrieve existingToke from localStorage
     let storedToke = localStorage.getItem("existingToke")
     const navigate = useNavigate()
@@ -40,7 +41,7 @@ const ProductDetails = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const res = await axios.get(`http://localhost:7000/customer/product/${id}`);
+                const res = await axios.get(`https://backend-details-0xik.onrender.com/customer/products/${id}`);
                 setProduct(res.data);
                 setLoading(false);
             } catch (err) {
@@ -59,7 +60,7 @@ const ProductDetails = () => {
         <div>
             <div style={{ position: "relative", width: "100vw", height: "100vh", overflow: "hidden" }}>
                 {/* Bouncing Balls Canvas */}
-                <BouncingBalls />
+                <AnimatedBackgrounds />
                 <Link to='/'><img
                     src={logo}
                     alt="Logo"
@@ -73,43 +74,70 @@ const ProductDetails = () => {
                 </div>
 
                 {/* Signi Form */}
-                <div className='freedova'>
-                    <section style={{ overflowX:"hidden", overflowY:"hidden", justifyContent: "center", padding: "30px", display: "flex", alignItems: "center"}} className="signin">
-                        <div style={{ justifyContent: "center", justifyItems: "center", }}>
-                            <div>
-                            <div>
-      <h1>{product.name}</h1>
-      <p>{product.description}</p>
-      <h3>Price: {product.price}</h3>
-      <div>
-        {product.imageUrl?.map((image, index) => (
-          <img key={index} src={image} alt={product.name} style={{ width: "200px", margin: "10px" }} />
-        ))}
+                {/* <div className='freedova'>
+                    <section style={{ justifyContent: "center", padding: "30px", display: "flex", alignItems: "center" }} className="signin">
+                        <div style={{ justifyContent: "center", justifyItems: "center", overflow:"hidden", height:"80%" }}>
+                            <div style={{overflow:"auto" , height:"100%"}}>
+                                <div>
+                                    <h1>{product.name}</h1>
+                                    <p>{product.description}</p>
+                                    <h3>Price: {product.price}</h3>
+                                    <div>
+                                        {product.imageUrl?.map((image, index) => (
+                                            <img key={index} src={image} alt={product.name} style={{ width: "200px", margin: "10px" }} />
+                                        ))}
 
-<button
-    onClick={() => navigate("/dash2")}
-    style={{
-      padding: "10px 20px",
-      backgroundColor: "gold",
-      color: "black",
-      border: "none",
-      borderRadius: "8px",
-      cursor: "pointer",
-      right:"170px",
-        position:"absolute",
-        bottom:"0px",
-      fontWeight: "bold"
-    }}
-  >
-    ← Back to Dashboard
-  </button>
-      </div>
-    </div>
+                                        <button
+                                            onClick={() => navigate("/list")}
+                                            style={{
+                                                padding: "10px 20px",
+                                                backgroundColor: "gold",
+                                                color: "black",
+                                                border: "none",
+                                                borderRadius: "8px",
+                                                cursor: "pointer",
+                                                right: "170px",
+                                                position: "absolute",
+                                                bottom: "0px",
+                                                fontWeight: "bold"
+                                            }}
+                                        >
+                                            ← Back
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
                     </section>
-                </div>
+                </div> */}
+                <div className='freedova'>
+  <div className="scrollable-content">
+    <section style={{ justifyContent: "center", padding: "30px", display: "flex", alignItems: "center" }} className="signin">
+      <div style={{ justifyContent: "center", justifyItems: "center", overflow:"hidden", height:"80%" }}>
+        <div>
+          <div>
+            <h1>{product.name}</h1>
+            <p>{product.description}</p>
+            <h3>Price: {product.price}</h3>
+            <div>
+              {product.imageUrl?.map((image, index) => (
+                <img key={index} src={image} alt={product.name} style={{ width: "200px", margin: "10px" }} />
+              ))}
+
+              <button
+                onClick={() => navigate("/list")}
+                className="laz"
+              >
+                ← Back
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
 
             </div>
 

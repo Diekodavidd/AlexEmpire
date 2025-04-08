@@ -31,7 +31,7 @@ const ProductListingPage = () => {
   
       // Make a request to verify the token
       axios
-        .get("http://localhost:7000/customer/verify", {
+        .get("https://backend-details-0xik.onrender.com/customer/verify", {
           headers: {
             Authorization: `Bearer ${storedToke}`,
           },
@@ -49,7 +49,7 @@ const ProductListingPage = () => {
       // Fetch products
       const fetchProducts = async () => {
         try {
-          const res = await axios.get("http://localhost:7000/customer/products");
+          const res = await axios.get("https://backend-details-0xik.onrender.com/customer/products");
           setProducts(res.data);
   
           const uniqueCategories = [
@@ -140,7 +140,7 @@ const ProductListingPage = () => {
     <div className="container mt-4">
       <div className="">
         {/* Sidebar */}
-        <div className="col-lg-3 mt-5 mb-4 sidebar">
+        <div className=" mt-5 mb-4 sidebar">
           <div className="border p-3 rounded bg-dark text-white">
           <h5>Categories</h5>
             {categories.map((category, i) => (
@@ -174,7 +174,7 @@ const ProductListingPage = () => {
                   onChange={() => {
                     setSelectedBrands((prev) =>
                       prev.includes(brand)
-                        ? prev.filter((b) => b !== brand)
+                        ? prev.filter((b) => b !== brand)3
                         : [...prev, brand]
                     );
                   }}
@@ -235,7 +235,7 @@ const ProductListingPage = () => {
         </div>
 
         {/* Product Grid */}
-        <main className="col-lg-10 main-content">
+        <main className=" main-content">
           <div className="d-flex justify-content-between align-items-center mt-5 mb-3">
             <h4>
               {selectedCategory
@@ -244,11 +244,23 @@ const ProductListingPage = () => {
             </h4>
             
             
-            <select className="form-select w-auto">
+            <select className=" w-auto waxq">
               <option>Relevance</option>
               <option>Price: Low to High</option>
               <option>Price: High to Low</option>
             </select>
+            <select
+  className="w-auto daxp"
+  value={selectedCategory}
+  onChange={(e) => setSelectedCategory(e.target.value)}
+>
+  <option disabled>Categories</option>
+  {categories.map((category, i) => (
+    <option key={i} value={category}>
+      {category}
+    </option>
+  ))}
+</select>
           </div>
 
           <div className="row g-3">
@@ -271,9 +283,9 @@ const ProductListingPage = () => {
                       {product.brand || "Unknown Brand"}
                     </p>
                     <p className="mb-1">
-                      ⭐ {product.rating || 0} |{" "}
+                      ⭐ {product.rating || 4} |{" "}
                       <span className="text-success">
-                        {product.inStock ? "In stock" : "Out of stock"}
+                        {product.inStock ? "Out of stock" : "In stock"}
                       </span>
                     </p>
                     <div className="d-flex justify-content-between">
@@ -284,8 +296,12 @@ const ProductListingPage = () => {
                         ₦{product.originalPrice?.toFixed(2) || 0}
                       </small>
                     </div>
-                    <button onClick={() => addToCart(product)} className="btn btn-warning w-100 mt-2">
-                      Add To Cart
+                    <div style={{position:"absolute", width:"30px", height:"30px",borderRadius:"50%" , backgroundColor:"red", textAlign:"center",
+                      top:"245px", right:"0px", margin:"10px", color:"white", fontSize:"18px",fontWeight:"600", display:"flex", justifyContent:"center", cursor:"pointer"
+                    }} onClick={() => addToCart(product)}> +          </div>
+                    <button className="btn btn-warning w-100 mt-2">
+                       <Link to={`/product/${product._id}`} className="btn btn-warning w-100 product-link"> View</Link>
+                      
                     </button>
                   </div>
                 </div>
@@ -325,7 +341,7 @@ const ProductListingPage = () => {
               <div className="cart-box" key={item._id}>
                 <img src={item.image} alt="" className="cart-img" />
                 <div className="cart-details">
-                  <h2 className="cart-product-title">{item.title}</h2>
+                  <h2 className="cart-product-title">{item.name}</h2>
                   <span className="cart-price">₦{item.price}</span>
                   <div className="cart-quantity">
                     <button onClick={() => updateQuantity(item._id, "dec")}>-</button>
@@ -333,12 +349,12 @@ const ProductListingPage = () => {
                     <button onClick={() => updateQuantity(item._id, "inc")}>+</button>
                   </div>
                 </div>
-                <button
+                <div
                   className="cart-remove"
                   onClick={() => removeFromCart(item._id)}
                 >
                   🗑
-                </button>
+                </div>
               </div>
             ))}
             <button

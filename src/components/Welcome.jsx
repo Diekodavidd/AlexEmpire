@@ -51,31 +51,47 @@ const Welcome = () => {
 </svg>
 
       </h1> */}
-      <img 
-        src={logom} 
-        alt="Logo" 
-        style={{ position:"absolute",top:"200px",left:"250px", width: "400px", height: "400px" }}
-      />
 
-      {/* Gold Get Started Button at Extreme Right */}
+      {/* Center container */}
       <div style={{
-        position: "absolute",
-        top: "69%",
-        right: "180px"
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "relative",
+        flexDirection: "column"
       }}>
-        <button style={{
-          backgroundColor: "gold",
-          color: "black",
-          fontSize: "1rem",
-          padding: "10px 20px",
-          border: "none",
-          borderRadius: "50%",
-          cursor: "pointer",
-          fontWeight: "bold",
-          marginRight:"180px"
-        }}>
-          <Link to='/signup' style={{ textDecoration: "none", color: "black" }}>Get Started</Link>
-        </button>
+        {/* Centered Image */}
+        <div style={{ position: "relative", textAlign: "center" }}>
+          <img 
+            src={logom} 
+            alt="Main Logo" 
+            style={{ 
+              width: "60vw", 
+              maxWidth: "400px", 
+              height: "auto" 
+            }}
+          />
+          {/* Button on top of image */}
+          <div className='daxz'>
+            <Link to="/signup" style={{ textDecoration: "none" }}>
+              <button style={{
+                backgroundColor: "gold",
+                color: "black",
+                fontSize: "1rem",
+                padding: "12px 24px",
+                border: "none",
+                borderRadius: "50%",
+                cursor: "pointer",
+                fontWeight: "bold",
+                boxShadow: "0 4px 10px rgba(0,0,0,0.3)"
+              }}>
+                Get Started
+              </button>
+            </Link>
+            </div>
+            </div>
       </div>
     </div>
   );

@@ -40,7 +40,7 @@ const Loginad = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:7000/customer/loginad', {
+            const res = await axios.post('https://backend-details-0xik.onrender.com/customer/loginad', {
                 firstname,
                 password,
             });
@@ -68,10 +68,12 @@ const Loginad = () => {
                 <div className='freedo'>
 
                     <form onSubmit={handleLogin}>
-                        <h2>Admin Login</h2>
+                        <h2 style={{width:"100%", textAlign:"center"}}>Admin Login</h2>
                         <input value={firstname} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
                         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-                        <button type="submit">Login</button>
+                       <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+                       <button style={{width:"20%", textAlign:"center", justifySelf:"center"}} type="submit">Login</button>
+                       </div>
                     </form>
 
                 </div>

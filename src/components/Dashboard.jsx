@@ -6,6 +6,7 @@ import logo from "../assets/lyom.png";
 import './logi.css';
 import BouncingBalls from "./BouncingBalls";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AnimatedBackgrounds from './Amiatio';
 
 const Dashboard = () => {
 
@@ -22,7 +23,7 @@ const Dashboard = () => {
   const [Imagefile, setImagefile] = useState(null);
   useEffect(() => {
 
-    axios.get("http://localhost:7000/customer/verify", {
+    axios.get("https://backend-details-0xik.onrender.com/customer/verify", {
       headers: {
         'Authorization': `Bearer ${storedToke}`
       }
@@ -54,7 +55,7 @@ const Dashboard = () => {
   }
 
   const UploadPics = () => {
-    axios.post("http://localhost:7000/customer/upload", { Imagefile, email:data.email })
+    axios.post("https://backend-details-0xik.onrender.com/customer/upload", { Imagefile, email:data.email })
       .then((res) => {
         console.log(res);
         alert("Pic Uploaded successfully")
@@ -68,7 +69,7 @@ const Dashboard = () => {
     <div>
       <div style={{ position: "relative", width: "100vw", height: "100vh", overflow: "hidden" }}>
         {/* Bouncing Balls Canvas */}
-        <BouncingBalls />
+        <AnimatedBackgrounds />
         <Link to='/'><img
           src={logo}
           alt="Logo"

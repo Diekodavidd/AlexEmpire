@@ -30,7 +30,7 @@ const Profile = () => {
     
     useEffect(() => {
 
-        axios.get("http://localhost:7000/customer/verify", {
+        axios.get("https://backend-details-0xik.onrender.com/customer/verify", {
             headers: {
                 'Authorization': `Bearer ${storedToke}`
             }
@@ -69,7 +69,7 @@ const Profile = () => {
                 {/* Signi Form */}
                 <div className='freedo'>
                     <section style={{ justifyContent: "center", padding: "30px", display: "flex", alignItems: "center" }} className="signin">
-                        <div style={{justifyContent:"center", justifyItems:"center"}}>
+                        <div style={{justifyContent:"center", justifyItems:"center"}} className='container'>
                             <h1 style={{color:"white"}}>My Profile</h1>
                             
                                 <img src={data && data.profilePic} alt="" style={{ marginLeft:"50px",width: "90px", height: "90px", borderRadius: "50%", marginRight: "10px" }} />

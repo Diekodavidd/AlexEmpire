@@ -44,7 +44,7 @@ const Login = () => {
             setLoading(true);
 
             const response = await axios.post(
-                "http://localhost:7000/customer/login",
+                "https://backend-details-0xik.onrender.com/customer/login",
                 userDetails
             );
 

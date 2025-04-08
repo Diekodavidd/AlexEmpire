@@ -37,7 +37,7 @@ const Header = ({data, toggleCart, cartCount }) => {
   //   </div>
   // </header>
    
-    <header>
+    <header className="header">
       <nav className="main-nav">
         <div className="nav-left">
         <img
@@ -54,34 +54,25 @@ const Header = ({data, toggleCart, cartCount }) => {
         </ul> */}
         <nav className={`nav-links ${menuOpen ? 'active' : ''}`}>
       <ul>
-        <li><Link to="/dash2" onClick={() => setMenuOpen(false)}><div style={{ color: "white", textDecoration: "none", padding: "10px", cursor: "pointer" }}>Home</div></Link></li>
-       <li> <Link to="/list" onClick={() => setMenuOpen(false)}><div style={{ color: "white", textDecoration: "none", padding: "10px", cursor: "pointer" }}>Categories</div></Link></li>
-        <li><Link to="/admin" onClick={() => setMenuOpen(false)}><div style={{ color: "white", textDecoration: "none", padding: "10px", cursor: "pointer" }}>Admin</div></Link></li>
-        <li><Link to="/profile" onClick={() => setMenuOpen(false)}><div style={{ color: "white", textDecoration: "none", padding: "10px", cursor: "pointer" }}>Profile</div></Link></li>
+        <li><Link to="/dash2" style={{ textDecoration: "none", color: "white" }} onClick={() => setMenuOpen(false)}><div style={{ color: "white", textDecoration: "none", padding: "10px", cursor: "pointer" }}>Home</div></Link></li>
+       <li> <Link to="/list" style={{ textDecoration: "none", color: "white" }} onClick={() => setMenuOpen(false)}><div style={{ color: "white", textDecoration: "none", padding: "10px", cursor: "pointer" }}>Categories</div></Link></li>
+        {/* <li><Link to="/admin" style={{ textDecoration: "none", color: "white" }} onClick={() => setMenuOpen(false)}><div style={{ color: "white", textDecoration: "none", padding: "10px", cursor: "pointer" }}>Admin</div></Link></li> */}
+        <li><Link to="/profile" style={{ textDecoration: "none", color: "white" }} onClick={() => setMenuOpen(false)}><div style={{ color: "white", textDecoration: "none", padding: "10px", cursor: "pointer" }}>Profile</div></Link></li>
       </ul>
     </nav>
 
         <div className="nav-right">
           <ShoppingCartIcon onClick={toggleCart} style={{fontSize:"30px"}} />
-          <span style={{
-            position: "absolute",
-            top: 9,
-            right: 256,
-            backgroundColor: "red",
-            color: "white",
-            fontSize: 12,
-            padding: "2px 6px",
-            borderRadius: "50%",
-            fontWeight: "bold",
-            boxShadow: "0 0 4px rgba(0,0,0,0.2)"
-          }} className="cart-item-count">{cartCount}</span>
+          <span  className="cart-item-count dadf">{cartCount}</span>
           {/* <button className="signup-btn">Sign Up</button> */}
-        
-            <img src={data && data.profilePic} alt="" style={{ width: "50px", height: "40px", borderRadius: "50%", marginRight: "0px", }}
+        <div onClick={toggleMenu} className="mex" style={{display:"flex"}}>
+        <img src={data && data.profilePic} alt="" style={{ width: "50px", height: "40px", borderRadius: "50%", marginRight: "0px", }}
             />
-            <h1  onClick={toggleMenu} style={{ fontSize: "29px", marginLeft: "5px" }}>
+            <h1 style={{ fontSize: "29px", marginLeft: "5px" }}>
               {data ? data.firstname : "Guest"}!
             </h1>
+        </div>
+            
             {/* <div className="icon-button menu-icon" onClick={toggleMenu}>
                     {menuOpen ? <Close /> : <Menu />}
       </div> */}

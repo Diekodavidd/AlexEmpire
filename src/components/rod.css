@@ -38,7 +38,7 @@ body {
     position: fixed;
   top: 10px;
   left: 0;
-  width: 250px; /* Adjust the width as needed */
+  width: 230px; /* Adjust the width as needed */
   height: 100vh; /* Full height of the viewport */
   padding: 10px;
   z-index: 1000; /* Ensure it's above other content */
@@ -117,6 +117,73 @@ body {
     color: #fff;
   }
   .main-content {
-    margin-left: 270px; /* Adjust this according to your sidebar width */
- 
+    margin-top: -30px;
+    margin-left: 120px; /* Adjust this according to your sidebar width */
+    width: 98%;
+  }
+  .daxp{
+    display: none;
+    --bs-form-select-bg-img: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e);
+   
+    width: 100%;
+    padding: .375rem 2.25rem .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-image: var(--bs-form-select-bg-img), var(--bs-form-select-bg-icon, none);
+    background-repeat: no-repeat;
+    background-position: right .75rem center;
+    background-size: 16px 12px;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  }
+  .waxq{
+    --bs-form-select-bg-img: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e);
+    display: block;
+    width: 100%;
+    padding: .375rem 2.25rem .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-image: var(--bs-form-select-bg-img), var(--bs-form-select-bg-icon, none);
+    background-repeat: no-repeat;
+    background-position: right .75rem center;
+    background-size: 16px 12px;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  }
+  @media (max-width:600px) {
+    .main-content{
+      margin-top: -30px;
+      margin-left: 5px; /* Adjust this according to your sidebar width */
+      width: 96%;
+    }
+    .sidebar {
+      display: none;
+        width: 100%;
+        height: fit-content;
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 10px;
+        z-index: 1000;
+    }
+    .waxq{
+      display: none;
+    }
+    .daxp{
+      display: block;
+    }
   }

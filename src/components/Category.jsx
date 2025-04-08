@@ -98,7 +98,7 @@ const Admin = () => {
   return (
     <div className="admin-container">
       <Link to="/" className="logo-link">
-        <img src={logo} alt="Logo" className="logo" width={40} height={40} />
+        <img src={logo} alt="Logo" className="logo" width={80} height={80} />
       </Link>
 
       <div className="product-list">

@@ -63,6 +63,7 @@ const AnimatedBackgrounds = () => {
               dur="5s"
               repeatCount="indefinite"
             />
+            
           </path>
         </svg>
       </div>

@@ -61,7 +61,7 @@ const Dashboard2 = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get("http://localhost:7000/customer/products"); // Your route
+      const res = await axios.get("https://backend-details-0xik.onrender.com/customer/products"); // Your route
       setProducts(res.data);
       // console.log(res.data);
      const products = res.data
@@ -138,7 +138,7 @@ const Dashboard2 = () => {
       <Hero />
       <Searchar />
       <TopSales  products={products} addToCart={addToCart} />
-      <MewGadgets products={products}  />
+      <MewGadgets products={products} addToCart={addToCart} />
       <Promo />
       <ExploreMore />
       <Newsletter />
@@ -152,24 +152,24 @@ const Dashboard2 = () => {
               <div className="cart-box" key={item._id}>
                 <img src={item.image} alt="" className="cart-img" />
                 <div className="cart-details">
-                  <h2 className="cart-product-title">{item.title}</h2>
+                  <h2 className="cart-product-title">{item.name}</h2>
                   <span className="cart-price">${item.price}</span>
                   <div className="cart-quantity">
                     <button onClick={() => updateQuantity(item._id, "dec")}>-</button>
                     <span className="number">{item.quantity}</span>
-                    <button onClick={() => updateQuantity(item._id, "inc")}>+</button>
+                    <button className="number" onClick={() => updateQuantity(item._id, "inc")} >+</button>
                   </div>
                 </div>
-                <button
+                <div
                   className="cart-remove"
                   onClick={() => removeFromCart(item._id)}
                 >
                   🗑
-                </button>
+                </div>
               </div>
             ))}
             <button
-              style={{ width: "10%", height: "8%", border: "none", backgroundColor: "transparent" }}
+              style={{ width: "10%", height: "8%", border: "none", backgroundColor: "transparent"  }}
               onClick={() => setIsCartOpen(false)}
               id="cart-close"
             >

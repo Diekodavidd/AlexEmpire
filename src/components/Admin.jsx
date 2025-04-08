@@ -95,52 +95,15 @@ const Admin = () => {
   const handleFileChange = (e) => {
     const files = Array.from(e.target.files); // Convert FileList to an array
     setImageFiles(files); // Update imageFiles state
+    console.log(imageFiles);
+    
+    
     // Preview the images
     const previewUrls = files.map((file) => URL.createObjectURL(file));
     setPreviewImages(previewUrls); // Set preview images
   };
 
 
-
-
-  // Handle form submission
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   const formData = new FormData();
-  //   formData.append("name", productName);
-  //   formData.append("category", productCategory);
-  //   formData.append("description", productDescription);
-  //   formData.append("price", productPrice);
-
-  //   // Append multiple images to the FormData object
-  //   imageFiles.forEach((file) => {
-  //     formData.append("images", file); // must match .array("images", 5)
-  //   });
-
-  //   try {
-  //     if (editingProduct) {
-  //       await axios.put(`http://localhost:7000/customer/products/${editingProduct._id}`, formData, {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data"
-  //         }
-  //       });
-  //     } else {
-  //       await axios.post("http://localhost:7000/customer/add", formData, {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data"
-  //         }
-  //       });
-  //     }
-  //     alert("Product added successfully!");
-  //     console.log(response.data);
-  //     // Redirect to product list
-  //     navigate("/dash2"); // If you're using react-router
-  //   } catch (error) {
-  //     console.error("Error adding product:", error);
-  //     alert("Failed to add product.");
-  //   }
-  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -157,7 +120,7 @@ const Admin = () => {
     try {
       if (editingProduct) {
         // Update existing product
-        await axios.put(`http://localhost:7000/customer/products/${editingProduct._id}`, formData, {
+        await axios.put(`https://backend-details-0xik.onrender.com/customer/products/${editingProduct._id}`, formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }
@@ -165,7 +128,7 @@ const Admin = () => {
         alert("Product updated successfully!");
       } else {
         // Add new product
-        await axios.post("http://localhost:7000/customer/add", formData, {
+        await axios.post("https://backend-details-0xik.onrender.com/customer/add", formData, {
           headers: {
             "Content-Type": "multipart/form-data"
           }
@@ -191,7 +154,7 @@ const Admin = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get("http://localhost:7000/customer/products"); // Your route
+      const res = await axios.get("https://backend-details-0xik.onrender.com/customer/products"); // Your route
       setProducts(res.data);
     } catch (err) {
       console.error("Error fetching products", err);
@@ -205,7 +168,7 @@ const Admin = () => {
   const handleDelete = async (productId) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
-        await axios.delete(`http://localhost:7000/customer/products/${productId}`);
+        await axios.delete(`https://backend-details-0xik.onrender.com/customer/products/${productId}`);
         alert("Deleted successfully!");
         fetchProducts();
       } catch (err) {
