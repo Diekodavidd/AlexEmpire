@@ -3,7 +3,7 @@ import axios from 'axios';
 import './style.css'
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/IMG_1460.PNG"; // Ensure the logo image is in the correct path
+import logo from "../assets/lyom.png";
 import logor from "../assets/signin-image.jpg"; // Ensure the logo image is in the correct path
 import './logi.css';
 import BouncingBalls from "./BouncingBalls";
@@ -11,6 +11,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import EmailIcon from "@mui/icons-material/Email";
 import { useFormik } from 'formik'
 import * as yup from 'yup'
+import AnimatedBackgrounds from './Amiatio';
 
 
 const Login = () => {
@@ -76,7 +77,7 @@ const Login = () => {
         <div>
             <div style={{ position: "relative", width: "100vw", height: "100vh", overflow: "hidden" }}>
                 {/* Bouncing Balls Canvas */}
-                <BouncingBalls />
+                <AnimatedBackgrounds />
                 <Link to='/'><img
                     src={logo}
                     alt="Logo"

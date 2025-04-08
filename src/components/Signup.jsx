@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Modal, Button, Form } from "react-bootstrap";
 import BouncingBalls from "./BouncingBalls";
-import logo from "../assets/IMG_1460.PNG";
-import fae from "../assets/alexander_david_logo_transparent (2).png";
+import logo from "../assets/lyom.png";
+import fae from "../assets/lyomk.png";
 import "./style.css";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import LockIcon from "@mui/icons-material/Lock";
@@ -13,6 +13,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useFormik } from 'formik'
 import * as yup from 'yup'
+import AnimatedBackgrounds from "./Amiatio";
 
 const Signup = () => {
 
@@ -75,7 +76,7 @@ const Signup = () => {
   return (
     <div>
       <div style={{ position: "relative", width: "100vw", height: "100vh", overflow: "hidden" }}>
-        <BouncingBalls />
+        <AnimatedBackgrounds />
         <Link to='/'><img
           src={logo}
           alt="Logo"

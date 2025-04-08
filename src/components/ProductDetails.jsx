@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './style.css'
 import BouncingBalls from "./BouncingBalls";
 import axios from "axios";
-import logo from "../assets/IMG_1460.PNG"; // Ensure the logo image is in the correct path
+import logo from "../assets/lyom.png";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './style.css'
 import { Link, useNavigate } from 'react-router-dom';
-import logo from "../assets/IMG_1460.PNG"; // Ensure the logo image is in the correct path
+import logo from "../assets/lyom.png";
 import './logi.css';
 import BouncingBalls from "./BouncingBalls";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -76,18 +76,17 @@ const Dashboard = () => {
         /></Link>
         <div style={{ color: "white", position: "fixed", top: "20px", right: "20px", fontSize: "12px", display: "flex" }}>
           <AccountCircleIcon style={{ fontSize: "35px", color: "gold" }} />
-          {/* <h1 style={{fontSize:"29px" , marginLeft:"5px"  }}>Welcome {storedCustomer ? storedCustomer.firstname : "Guest"}!</h1> */}
           <h1 style={{ fontSize: "29px", marginLeft: "5px" }}>Welcome {data ? data.firstname : "Guest"}!</h1>
 
         </div>
         {/* Signi Form */}
-        <div className='freedo'><div>
+        <div className='freedo'>
+          <div>
           <section style={{ justifyContent: "center", padding: "30px", display: "flex", alignItems: "center" }} className="signin">
             <div>
               <h1 style={{ color: "white", fontSize: "20px", textAlign: "center", marginBottom: "30px" }}>Upload a Profile Picture {data ? data.firstname : "Guest"}!</h1>
               <div style={{ display: "flex" }}><input type="file" onChange={handleimagefile} />
                 <button style={{
-                  padding: "20px",
                   backgroundColor: "gold",
                   color: "black",
                   fontSize: "1rem",

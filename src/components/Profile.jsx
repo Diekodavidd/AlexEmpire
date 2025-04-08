@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './style.css'
 import { Link, useNavigate } from 'react-router-dom';
-import logo from "../assets/IMG_1460.PNG"; // Ensure the logo image is in the correct path
+import logo from "../assets/lyom.png";
 import './logi.css';
 import BouncingBalls from "./BouncingBalls";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import AnimatedBackgrounds from './Amiatio';
 
 const Profile = () => {
 
@@ -52,7 +53,7 @@ const Profile = () => {
         <div>
             <div style={{ position: "relative", width: "100vw", height: "100vh", overflow: "hidden" }}>
                 {/* Bouncing Balls Canvas */}
-                <BouncingBalls />
+                <AnimatedBackgrounds />
                 <Link to='/'><img
                     src={logo}
                     alt="Logo"

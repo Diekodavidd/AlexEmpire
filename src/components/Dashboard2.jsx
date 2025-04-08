@@ -2,10 +2,20 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './style.css'
 import { Link, useNavigate } from 'react-router-dom';
-import logo from "../assets/IMG_1460.PNG"; // Ensure the logo image is in the correct path
+import logo from "../assets/lyom.png";
 import './logi.css';
 import BouncingBalls from "./BouncingBalls";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Header from './Header';
+import Hero from './Hero';
+import TopSales from './TopSales';
+import MewGadgets from './MewGadgets';
+import Promo from './Promo';
+import Searchar from './Searchar';
+import ExploreMore from './ExploreMore';
+import Newsletter from './Newsletter';
+import Footer from './Footer';
 
 const Dashboard2 = () => {
 
@@ -21,6 +31,9 @@ const Dashboard2 = () => {
   const [data, setData] = useState()
   const [products, setProducts] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [isCartActive, setIsCartActive] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   useEffect(() => {
 
     axios.get("http://localhost:7000/customer/verify", {
@@ -41,10 +54,20 @@ const Dashboard2 = () => {
     // }
   }, [])
 
+   // Toggle cart visibility
+   const toggleCart = () => {
+    setIsCartOpen(!isCartOpen);
+  };
+
   const fetchProducts = async () => {
     try {
       const res = await axios.get("http://localhost:7000/customer/products"); // Your route
       setProducts(res.data);
+      // console.log(res.data);
+     const products = res.data
+      console.log(products);
+      
+      
     } catch (err) {
       console.error("Error fetching products", err);
     }
@@ -58,94 +81,108 @@ const Dashboard2 = () => {
     navigate(`/product/${productId}`);
   };
 
+  // const cartIcon = document.querySelector("#cart-icon")
+  // const cart = document.querySelector(".cart")
+  // const cartClose = document.querySelector("#cart-close")
+  // const addToCartButtons = document.querySelectorAll(".add-cart")
+
+  const addToCart = (product) => {
+    const existing = cartItems.find((item) => item._id === product._id);
+    if (existing) {
+      alert("Product already in cart");
+      return;
+    }
+
+    const cartItem = {
+      ...product,
+      quantity: 1,
+      image: product.imageUrl?.[0] || "", // Use the first image in imageUrl array
+    };
+
+    setCartItems([...cartItems, cartItem]);
+  };
+
+  const updateQuantity = (_id, action) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item._id === _id
+          ? {
+              ...item,
+              quantity:
+                action === "inc"
+                  ? item.quantity + 1
+                  : item.quantity > 1
+                  ? item.quantity - 1
+                  : item.quantity,
+            }
+          : item
+      )
+    );
+  };
+
+  const removeFromCart = (_id) => {
+    setCartItems(cartItems.filter((item) => item._id !== _id));
+  };
+
+  const getTotal = () => {
+    return cartItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+  };
+
+  
   return (
-    <div>
-      <div style={{ position: "relative", width: "100vw", height: "100vh", overflow: "hidden" }}>
-        {/* Bouncing Balls Canvas */}
-        <BouncingBalls />
-        <Link to='/'><img
-          src={logo}
-          alt="Logo"
-          style={{ position: "absolute", top: "20px", left: "20px", width: "100px", height: "100px" }}
-        /></Link>
+    <div style={{backgroundColor: "#0B0C2A"}} >
+      <Header data={data} toggleCart={toggleCart} cartCount={cartItems.length}/>
+      <Hero />
+      <Searchar />
+      <TopSales  products={products} addToCart={addToCart} />
+      <MewGadgets products={products}  />
+      <Promo />
+      <ExploreMore />
+      <Newsletter />
+      <Footer />
 
-
-        <div style={{ position: "fixed", top: "20px", right: "20px", }}>
-          <div onClick={() => setIsOpen(!isOpen)} style={{
-            color: "gold", position: "relative",
-            fontSize: "12px",
-            display: "flex",
-            textDecoration: "none",
-            cursor: "pointer",
-            alignItems: "center",
-          }}
-          >
-            <img src={data && data.profilePic} alt="" style={{ width: "50px", height: "40px", borderRadius: "50%", marginRight: "10px", }}
-            />
-            <h1 style={{ fontSize: "29px", marginLeft: "5px" }}>
-              Welcome {data ? data.firstname : "Guest"}!
-            </h1>
-          </div>
-
-          {isOpen && (
-            <div
-              style={{
-                position: "absolute",
-                top: "100%",
-                left: 230,
-                color: "white",
-                fontSize: "16px",
-                background: "gold",
-                border: "1px solid #ccc",
-                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                borderRadius: "5px",
-                padding: "10px",
-                width: "100px",
-                zIndex: 1000,
-              }}
+      {isCartOpen && (
+        <div className={`cart ${isCartOpen ? "active" : ""}`}>
+          <h2 className="cart-title">Your Cart</h2>
+          <div className="cart-content">
+            {cartItems.map((item) => (
+              <div className="cart-box" key={item._id}>
+                <img src={item.image} alt="" className="cart-img" />
+                <div className="cart-details">
+                  <h2 className="cart-product-title">{item.title}</h2>
+                  <span className="cart-price">${item.price}</span>
+                  <div className="cart-quantity">
+                    <button onClick={() => updateQuantity(item._id, "dec")}>-</button>
+                    <span className="number">{item.quantity}</span>
+                    <button onClick={() => updateQuantity(item._id, "inc")}>+</button>
+                  </div>
+                </div>
+                <button
+                  className="cart-remove"
+                  onClick={() => removeFromCart(item._id)}
+                >
+                  🗑
+                </button>
+              </div>
+            ))}
+            <button
+              style={{ width: "10%", height: "8%", border: "none", backgroundColor: "transparent" }}
+              onClick={() => setIsCartOpen(false)}
+              id="cart-close"
             >
-              <Link to='/profile' style={{textDecoration:"none"}} ><div style={{color:"white",textDecoration:"none", padding: "10px", cursor: "pointer" }}>Profile</div></Link>
-              <hr style={{color:"black", height:"3px", width:"100%"}}/>
-              <Link to='/admin'style={{textDecoration:"none"}}  ><div style={{color:"white",textDecoration:"none", padding: "10px", cursor: "pointer" }}>Admin</div></Link>
-            </div>
-          )}
-        </div>
-        {/* <div style={{ color: "white", position: "fixed", top: "20px", right: "20px", fontSize: "12px", display: "flex" }}>
-        <div style={{ color: "gold", fontSize: "12px", display: "flex", textDecoration:"none"}}>
-        <img src={data && data.profilePic} alt="" style={{width:"50px", height:"40px",borderRadius:"50%", marginRight:"10px"}} />
-          <h1 style={{ fontSize: "29px", marginLeft: "5px" }}>Welcome {data ? data.firstname : "Guest"}!</h1>
-        </div>
-        </div> */}
-        {/* Signi Form */}
-        {/* Link to='/profile' */}
-        <div className='freedoq'>
-          <div className="shop" >
-            <h2 style={{color:"white"}}>Available Products</h2>
-            <div className='products-content'>
-{products.map((product) => (
-  <div key={product._id} className="product-box">
-    <Link to={`/product/${product._id}`} style={{ textDecoration: "none", color: "inherit" }}>
-      <div className="img-box">
-        {product.imageUrl?.length > 0 && (
-          <img src={product.imageUrl[0]} alt={product.name} />
-        )}
-      </div>
-      <div className='daq'><h2 className="product-title">{product.name}</h2></div>
-      {/* <p className="products-titlep">{product.description}</p> */}
-      <div className="price-and-cart">
-        <span className="price">{product.price}</span>
-        <button className='add-cart'>View</button>
-      </div>
-    </Link>
-  </div>
-))}
-
-            </div>
+              x
+            </button>
           </div>
 
+          <div className="total">
+            <h3>Total: ${getTotal().toFixed(2)}</h3>
+          </div>
+          <button className="btn-buy">Buy Now</button>
         </div>
-      </div>
-
+      )}
 
     </div>
   );

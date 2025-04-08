@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import BouncingBalls from "./BouncingBalls";
-import logo from "../assets/IMG_1460.PNG"; // Ensure the logo image is in the correct path
+import logo from "../assets/lyom.png";
+import logom from "../assets/qqq.png";
+import AnimatedBackgrounds from './Amiatio';
 
 const Welcome = () => {
   return (
@@ -10,14 +12,14 @@ const Welcome = () => {
       
 
     
-      <BouncingBalls />
+      <AnimatedBackgrounds />
       <img 
         src={logo} 
         alt="Logo" 
         style={{ position: "absolute", top: "20px", left: "20px", width: "100px", height: "100px" }}
       />
 
-      <h1 style={{
+      {/* <h1 style={{
         position: "absolute",
         top: "35%",
         width: "100%",
@@ -35,7 +37,7 @@ const Welcome = () => {
         </filter>
     </defs>
     
-    <g transform="translate(0,40) rotate(-15,60,50)" filter="url(#shadow)">
+    <g transform="translate(290,40) rotate(-15,60,50)" filter="url(#shadow)">
         <path d="M30 60 L50 20 L70 60 L90 20 L110 60 L130 20 L150 60" stroke="white" stroke-width="4" fill="none"/>
         <circle cx="50" cy="20" r="7" fill="gold" stroke="white" stroke-width="2"/>
         <circle cx="90" cy="20" r="7" fill="red" stroke="white" stroke-width="2"/>
@@ -44,11 +46,16 @@ const Welcome = () => {
     </g>
     
     <text x="50%" y="90%" font-family="'Great Vibes', cursive" font-size="48" fill="white" text-anchor="middle" dominant-baseline="middle">
-        <tspan font-weight="bold" font-size="52">W</tspan>elcome to Alexander David Empire
+        <tspan font-weight="bold" font-size="52">L</tspan>yon Mart
     </text>
 </svg>
 
-       </h1>
+      </h1> */}
+      <img 
+        src={logom} 
+        alt="Logo" 
+        style={{ position:"absolute",top:"200px",left:"250px", width: "400px", height: "400px" }}
+      />
 
       {/* Gold Get Started Button at Extreme Right */}
       <div style={{
@@ -62,9 +69,10 @@ const Welcome = () => {
           fontSize: "1rem",
           padding: "10px 20px",
           border: "none",
-          borderRadius: "5px",
+          borderRadius: "50%",
           cursor: "pointer",
-          fontWeight: "bold"
+          fontWeight: "bold",
+          marginRight:"180px"
         }}>
           <Link to='/signup' style={{ textDecoration: "none", color: "black" }}>Get Started</Link>
         </button>

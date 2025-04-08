@@ -1,0 +1,213 @@
+.top-sales-section {
+    padding: 20px;
+    background-color: #0B0C2A; /* Deep Navy for background */
+  }
+ .top-sales-grid::-webkit-scrollbar {
+    height: 4px;
+  }
+  
+ .top-sales-grid::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+  }
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #F5F5F5; /* Ivory White for text contrast */
+  }
+  
+  .top-sales-grid {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent wrapping of items */
+    gap: 20px; /* Adds space between the products */
+    overflow-x: auto; /* Enables horizontal scrolling if the items overflow */
+    padding-bottom: 20px;
+  }
+  
+  .product-card {
+    text-decoration: none;
+    justify-content: space-between;
+    height: 100%; /* Ensures consistency in grid */
+    max-height: 510px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+    overflow: hidden;
+    background-color: #111111; /* Charcoal Black for product cards */
+    padding: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 250px; /* Adjust the width of each product card */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .product-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+  
+  /* Name constraint */
+  .product-card h3 {
+    font-size: 1rem;
+    font-weight: 600;    text-decoration: none;
+
+    min-height: 48px; /* Space for 2 lines */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Show only 2 lines */
+    -webkit-box-orient: vertical;
+  }
+  
+  .category {
+    color: gray;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+  
+  .rating {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 8px;
+  }
+  
+  .price {
+    color: #f57c00;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+  
+  .view-button {
+    background: black;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    cursor: pointer;
+  }
+  
+ 
+  .view-button:hover {
+    background: #333;
+    color: white;
+  }
+  
+  
+  .add-to-cart {
+    margin-top: 10px;
+    background-color: #28a745; /* Green for Add to Cart button */
+    color: #0c0c0c;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+    transition: background-color 0.3s;
+  }
+  
+  .add-to-cart:hover {
+    background-color: #218838; /* Darker green on hover */
+  }
+/* Main navigation styles */
+.main-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 30px 0px 30px;
+  background-color: #0B0C2A; /* Deep Navy */
+  color: #F5F5F5; /* Ivory White for text */
+}
+
+
+
+
+.nav-links ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-links li {
+  display: inline-block;
+}
+
+.nav-link {
+  color: #F5F5F5; /* Ivory White */
+  text-decoration: none;
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #D4AF37; /* Primary Gold for hover effect */
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
+.nav-right img {
+  border-radius: 50%;
+}
+
+.nav-right h1 {
+  color: #F5F5F5;
+  font-size: 1.2rem;
+  margin-left: 10px;
+}
+
+.nav-right h1:hover {
+  cursor: pointer;
+  color: #D4AF37; /* Primary Gold on hover */
+}
+
+.nav-right .icon-button {
+  font-size: 30px;
+  color: #D4AF37; /* Primary Gold */
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+/* Styling for shopping cart icon */
+.icon-button {
+  font-size: 30px;
+  cursor: pointer;
+  color: #D4AF37; /* Primary Gold */
+}
+
+/* Burger Menu styles */
+.nav-links.active {
+  display: block;
+  background-color: #111111; /* Charcoal Black background for active menu */
+  position: absolute;
+  top: 57px;
+  right: 10px;
+  padding: 0px 20px;
+  border-radius: 8px;
+  text-align: center;
+  z-index: 1000;
+}
+
+.nav-links.active ul {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.nav-links.active li {
+  padding: 10px 0;
+}
+
+.nav-links.active .nav-link {
+  color: #F5F5F5;
+}
+  

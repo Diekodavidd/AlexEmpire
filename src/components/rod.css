@@ -1,0 +1,122 @@
+/* Global Styles */
+/* *{
+    background-color: #0B0C2A; 
+} */
+body {
+    background-color: #0B0C2A; /* Ivory White background */
+    color: #111111; /* Charcoal Black text */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+  
+  .container{
+    background-color: #0B0C2A;; /* Ivory White */
+    padding: 20px;
+    /* overflow-x: hidden; */
+  }
+  
+  h4 {
+    color: white; /* Deep Navy for headers */
+  }
+  
+  /* Header
+  .header {
+    background-color: #0B0C2A; 
+    color: #F5F5F5; 
+  }
+  
+  header .brand {
+    color: #D4AF37; 
+  } */
+  
+  /* Sidebar */
+  .sidebar {
+    background-color: #111111; /* Charcoal Black for sidebar */
+    color: #F5F5F5; /* Ivory White for text */
+    position: fixed;
+  top: 10px;
+  left: 0;
+  width: 250px; /* Adjust the width as needed */
+  height: 100vh; /* Full height of the viewport */
+  padding: 10px;
+  z-index: 1000; /* Ensure it's above other content */
+  }
+  
+  .sidebar .form-check-label {
+    color: #F5F5F5; /* Ivory White for labels */
+    cursor: pointer;
+  }
+  
+  .sidebar .btn-primary {
+    background-color: #D4AF37; /* Primary Gold for buttons */
+    border-color: #D4AF37;
+  }
+  
+  .sidebar .form-check-input:checked {
+    background-color: #D4AF37; /* Primary Gold for checked input */
+  }
+  
+  /* Product Cards */
+  .card {
+    background-color: #fff; /* Ivory White */
+    border: 1px solid #ddd; /* Light gray border */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+  
+  .card-body {
+    padding: 15px;
+  }
+  
+  .card-title {
+    font-size: 16px;
+    color: #0B0C2A; /* Deep Navy */
+  }
+  
+  .card-subtitle {
+    color: #C14B4B; /* Crimson Tint for discounts or special info */
+  }
+  
+  .card .text-success {
+    color: #1F3B73; /* Royal Blue for "In Stock" */
+  }
+  
+  /* Buttons */
+  .btn-warning {
+    background-color: #D4AF37; /* Primary Gold */
+    color: #fff;
+  }
+  
+  .btn-warning:hover {
+    background-color: #1F3B73; /* Royal Blue hover */
+    color: #fff;
+  }
+  
+  .btn-primary {
+    background-color: #D4AF37; /* Primary Gold */
+  }
+  
+  .btn-primary:hover {
+    background-color: #1F3B73; /* Royal Blue */
+    border-color: #1F3B73;
+  }
+  
+  /* Pagination */
+  .page-item.active .page-link {
+    background-color: #D4AF37; /* Primary Gold for active page */
+    border-color: #D4AF37;
+  }
+  
+  .page-link {
+    color: #111111; /* Charcoal Black for pagination links */
+  }
+  
+  .page-link:hover {
+    background-color: #1F3B73; /* Royal Blue hover effect */
+    color: #fff;
+  }
+  .main-content {
+    margin-left: 270px; /* Adjust this according to your sidebar width */
+ 
+  }
