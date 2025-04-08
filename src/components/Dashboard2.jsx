@@ -36,7 +36,7 @@ const Dashboard2 = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   useEffect(() => {
 
-    axios.get("http://localhost:7000/customer/verify", {
+    axios.get("https://backend-details-0xik.onrender.com/customer/verify", {
       headers: {
         'Authorization': `Bearer ${storedToke}`
       }
