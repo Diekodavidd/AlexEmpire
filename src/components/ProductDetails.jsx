@@ -16,7 +16,7 @@ const ProductDetails = () => {
     const [data, setData] = useState()
     useEffect(() => {
 
-        axios.get("http://localhost:7000/customer/verify", {
+        axios.get("https://backend-details-0xik.onrender.com/customer/verify", {
             headers: {
                 'Authorization': `Bearer ${storedToke}`
             }
@@ -41,7 +41,7 @@ const ProductDetails = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const res = await axios.get(`https://backend-details-0xik.onrender.com/customer/products/${id}`);
+                const res = await axios.get(`https://backend-details-0xik.onrender.com/customer/product/${id}`);
                 setProduct(res.data);
                 setLoading(false);
             } catch (err) {
