@@ -8,7 +8,7 @@ import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css
 import Dashboard from './components/Dashboard'
 import Dashboard2 from './components/Dashboard2'
 import Profile from './components/Profile'
-import Admin from './components/admin'
+import Admin from './components/Admin'
 import ProductDetails from './components/ProductDetails'
 import ThreeImageCarousel from './components/Carousel'
 import CategoryPage from './components/Category'
