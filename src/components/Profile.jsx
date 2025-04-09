@@ -67,8 +67,8 @@ const Profile = () => {
                 </div>
 
                 {/* Signi Form */}
-                <div className='freedo'>
-                    <section style={{ justifyContent: "center", padding: "30px", display: "flex", alignItems: "center" }} className="signin">
+                <div>
+                    <section style={{ justifyContent: "center", padding: "30px", display: "flex", alignItems: "center" }} className="signup">
                         <div style={{justifyContent:"center", justifyItems:"center"}} className='container'>
                             <h1 style={{color:"white"}}>My Profile</h1>
                             
