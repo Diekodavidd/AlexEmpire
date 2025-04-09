@@ -85,7 +85,7 @@ const Login = () => {
                 /></Link>
 
                 {/* Signi Form */}
-                <div className='freedo'>
+                <div >
 
                     <section className="signup">
                         <div className="container">
