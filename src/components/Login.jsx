@@ -87,7 +87,7 @@ const Login = () => {
                 {/* Signi Form */}
                 <div className='freedo'>
 
-                    <section className="signin">
+                    <section className="signup">
                         <div className="container">
                             <div className="signin-content">
                                 <div className="signin-image">
