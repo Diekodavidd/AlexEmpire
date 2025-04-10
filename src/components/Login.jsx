@@ -88,7 +88,7 @@ const Login = () => {
                 <div >
 
                     <section className="signin">
-                        <div className="container" style={{backgroundColor:"#0B0C2A"}}>
+                        <div className="container" style={{ backgroundColor: "#0B0C2A" }}>
                             <div className="signin-content">
                                 <div className="signin-image">
                                     <figure><img src={logor} alt="sing up image" /></figure>
@@ -98,28 +98,28 @@ const Login = () => {
                                 <div className="signin-form">
                                     <h2 className="form-title">Log In</h2>
                                     <form method="POST" className="register-form" id="login-form">
-                                        
-                                    <div style={{ color: "red" }}>
-                                                {commerceFormik.touched.your_name && commerceFormik.errors.your_name ? commerceFormik.errors.your_name : ""}
-                                            </div>  
+
+                                        <div style={{ color: "red" }}>
+                                            {commerceFormik.touched.your_name && commerceFormik.errors.your_name ? commerceFormik.errors.your_name : ""}
+                                        </div>
                                         <div className="form-group">
                                             <label htmlFor="email"><EmailIcon /></label>
-                                            <input type="email" 
-                                            name="your_name"
-                                             id="your_name"
-                                              placeholder="Your Email"
-                                              value={commerceFormik.values.your_name}
-                                              onChange={(e) => {
-                                                  commerceFormik.handleChange(e); // commerceFormik handles state update
-                                                  setUserDetails((prev) => ({ ...prev, email: e.target.value })); // Local state update
-                                              }}
-                                              onBlur={commerceFormik.handleBlur} 
-                                              />   
+                                            <input type="email"
+                                                name="your_name"
+                                                id="your_name"
+                                                placeholder="Your Email"
+                                                value={commerceFormik.values.your_name}
+                                                onChange={(e) => {
+                                                    commerceFormik.handleChange(e); // commerceFormik handles state update
+                                                    setUserDetails((prev) => ({ ...prev, email: e.target.value })); // Local state update
+                                                }}
+                                                onBlur={commerceFormik.handleBlur}
+                                            />
                                         </div>
-                                        
-                                            <div style={{ color: "red" }}>
-                                                {commerceFormik.touched.your_pass && commerceFormik.errors.your_pass ? commerceFormik.errors.your_pass : ""}
-                                            </div>
+
+                                        <div style={{ color: "red" }}>
+                                            {commerceFormik.touched.your_pass && commerceFormik.errors.your_pass ? commerceFormik.errors.your_pass : ""}
+                                        </div>
                                         <div className="form-group">
                                             <label htmlFor="pass"><LockIcon /></label>
                                             <input type="password"
@@ -155,6 +155,9 @@ const Login = () => {
                                                     ) : (
                                                         "Login"
                                                     )}</button>
+                                                <div className="form-group">
+                                                    <Link to="/forgot-password" className="forgot-password-link">Forgot Password?</Link>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>

@@ -20,6 +20,8 @@ import About from './components/About'
 import Contact from './components/Contact'
 import CartPage from './components/CartPage'
 import Checkout from './components/Checkout'
+import ForgotPassword   from './components/ForgotPassword'
+import ResetPassword from './components/ResetPassword'
 
 function App() {
     const [cartItems, setCartItems] = useState([]);
@@ -94,7 +96,9 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/cart" element={<CartPage  cartItems={cartItems} updateQuantity={updateQuantity} removeFromCart={removeFromCart} getTotal={getTotal}/>} />
-        
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+       <Route path="/reset/:token" element={<ResetPassword />} />
+
         {/* <Route path="/lists" element={<Particles />} /> */}
       </Routes>
     </>
