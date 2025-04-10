@@ -1,5 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './style.css'
+import { Link } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import logo from "../assets/lyom.png";
+import logor from "../assets/signin-image.jpg"; // Ensure the logo image is in the correct path
+import './logi.css';
+import BouncingBalls from "./BouncingBalls";
+import LockIcon from "@mui/icons-material/Lock";
+import EmailIcon from "@mui/icons-material/Email";
+import { useFormik } from 'formik'
+import * as yup from 'yup'
+import AnimatedBackgrounds from './Amiatio';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
@@ -36,6 +48,22 @@ const ForgotPassword = () => {
     };
 
     return (
+        <div>
+            <div style={{ position: "relative", width: "100vw", height: "100vh", overflow: "hidden" }}>
+                {/* Bouncing Balls Canvas */}
+                <AnimatedBackgrounds />
+                <Link to='/'><img
+                    src={logo}
+                    alt="Logo"
+                    style={{ position: "absolute", top: "20px", left: "20px", width: "100px", height: "100px" }}
+                /></Link>
+
+                {/* Signi Form */}
+                <div >
+
+                    <section className="signin">
+                        <div className="container" style={{ backgroundColor: "#0B0C2A" }}>
+                            
         <div className="forgot-container">
             <h2>Forgot Password</h2>
             <form onSubmit={handleSubmit}>
@@ -53,7 +81,18 @@ const ForgotPassword = () => {
             </form>
             {msg && <p className={msg.includes('success') ? 'success-msg' : 'error-msg'}>{msg}</p>}
         </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+
+
+        </div>
     );
 };
 
 export default ForgotPassword;
+
+
+

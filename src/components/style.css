@@ -263,11 +263,23 @@ body {
   border-right: 4px solid gold; /* Right border in gold */
   box-shadow: 5px 5px 15px gold; /* Gold box shadow */
 }
+.forgot-container{
+  text-align: center;
+  margin-top: 20px;
+}
+#confirmPassword{
+  margin-top: 20px;
+}
+.forgot-container button{
+  margin-top: 20px;
+  border-radius: 20px;
+}
 .signin{
+  overflow: auto;
   background: transparent;
   width: 50%; /* Adjust width to make it smaller */
   margin: auto;
-  height: 80%;
+  height: 60%;
   margin-top: 70px;
   margin-bottom: 20px;
   padding: 10px;
