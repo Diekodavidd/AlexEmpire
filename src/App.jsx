@@ -16,9 +16,63 @@ import Loginad from './components/Sigi'
 import ProductListingPage from './components/Productlistig'
 import { Category } from '@mui/icons-material'
 import AnimationBackground from './components/Amiatio'
-
+import About from './components/About'
+import Contact from './components/Contact'
+import CartPage from './components/CartPage'
+import Checkout from './components/Checkout'
 
 function App() {
+    const [cartItems, setCartItems] = useState([]);
+    const [isCartOpen, setIsCartOpen] = useState(false);
+  
+
+  
+ 
+    // Cart controls
+    const toggleCart = () => setIsCartOpen(!isCartOpen);
+  
+    const addToCart = (product) => {
+      const existing = cartItems.find((item) => item._id === product._id);
+      if (existing) {
+        alert("Product already in cart");
+        return;
+      }
+      setCartItems([...cartItems, {
+        ...product,
+        quantity: 1,
+        image: product.imageUrl?.[0] || "",
+      }]);
+    };
+  
+    const updateQuantity = (_id, action) => {
+      setCartItems((prevItems) =>
+        prevItems.map((item) =>
+          item._id === _id
+            ? {
+                ...item,
+                quantity:
+                  action === "inc"
+                    ? item.quantity + 1
+                    : item.quantity > 1
+                    ? item.quantity - 1
+                    : item.quantity,
+              }
+            : item
+        )
+      );
+    };
+  
+    const removeFromCart = (_id) => {
+      setCartItems(cartItems.filter((item) => item._id !== _id));
+    };
+  
+    const getTotal = () => {
+      return cartItems.reduce(
+        (total, item) => total + item.price * item.quantity,
+        0
+      );
+    };
+  
 
   return (
     <>
@@ -36,6 +90,11 @@ function App() {
         <Route path="/loginad" element={<Loginad />} />
         <Route path="/list" element={<ProductListingPage />} />
         <Route path="/lists" element={<AnimationBackground />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/cart" element={<CartPage  cartItems={cartItems} updateQuantity={updateQuantity} removeFromCart={removeFromCart} getTotal={getTotal}/>} />
+        
         {/* <Route path="/lists" element={<Particles />} /> */}
       </Routes>
     </>

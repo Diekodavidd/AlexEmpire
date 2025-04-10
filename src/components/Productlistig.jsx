@@ -3,6 +3,8 @@ import axios from "axios";
 import { Heart, Plus } from "lucide-react";
 import Header from "./Header";
 import "./rod.css"
+import { useContext } from 'react';
+import { CartContext } from './CartContext';
 
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -14,9 +16,11 @@ const ProductListingPage = () => {
     const [priceRange, setPriceRange] = useState({ min: 0, max: 10000 });
     const [selectedCategory, setSelectedCategory] = useState(null);
     
-      const [cartItems, setCartItems] = useState([]);
+      // const [cartItems, setCartItems] = useState([]);
       const [isCartOpen, setIsCartOpen] = useState(false);
     const [userData, setUserData] = useState(null); // To store user info
+
+    const { cartItems, addToCart, updateQuantity, removeFromCart, getTotal } = useContext(CartContext);
   
     const navigate = useNavigate();
   
@@ -89,50 +93,50 @@ const ProductListingPage = () => {
     setIsCartOpen(!isCartOpen);
   };
 
-  const addToCart = (product) => {
-    const existing = cartItems.find((item) => item._id === product._id);
-    if (existing) {
-      alert("Product already in cart");
-      return;
-    }
+  // const addToCart = (product) => {
+  //   const existing = cartItems.find((item) => item._id === product._id);
+  //   if (existing) {
+  //     alert("Product already in cart");
+  //     return;
+  //   }
 
-    const cartItem = {
-      ...product,
-      quantity: 1,
-      image: product.imageUrl?.[0] || "", // Use the first image in imageUrl array
-    };
+  //   const cartItem = {
+  //     ...product,
+  //     quantity: 1,
+  //     image: product.imageUrl?.[0] || "", // Use the first image in imageUrl array
+  //   };
 
-    setCartItems([...cartItems, cartItem]);
-  };
+  //   setCartItems([...cartItems, cartItem]);
+  // };
 
-  const updateQuantity = (_id, action) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item._id === _id
-          ? {
-              ...item,
-              quantity:
-                action === "inc"
-                  ? item.quantity + 1
-                  : item.quantity > 1
-                  ? item.quantity - 1
-                  : item.quantity,
-            }
-          : item
-      )
-    );
-  };
+  // const updateQuantity = (_id, action) => {
+  //   setCartItems((prevItems) =>
+  //     prevItems.map((item) =>
+  //       item._id === _id
+  //         ? {
+  //             ...item,
+  //             quantity:
+  //               action === "inc"
+  //                 ? item.quantity + 1
+  //                 : item.quantity > 1
+  //                 ? item.quantity - 1
+  //                 : item.quantity,
+  //           }
+  //         : item
+  //     )
+  //   );
+  // };
 
-  const removeFromCart = (_id) => {
-    setCartItems(cartItems.filter((item) => item._id !== _id));
-  };
+  // const removeFromCart = (_id) => {
+  //   setCartItems(cartItems.filter((item) => item._id !== _id));
+  // };
 
-  const getTotal = () => {
-    return cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0
-    );
-  };
+  // const getTotal = () => {
+  //   return cartItems.reduce(
+  //     (total, item) => total + item.price * item.quantity,
+  //     0
+  //   );
+  // };
 
 
   return (<div style={{backgroundColor: "#0B0C2A"}} >

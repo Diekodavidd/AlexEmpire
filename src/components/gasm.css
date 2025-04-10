@@ -191,7 +191,7 @@
   background-color: #111111; /* Charcoal Black background for active menu */
   position: absolute;
   top: 57px;
-  right: 10px;
+  right: 0px;
   padding: 0px 20px;
   border-radius: 8px;
   text-align: center;
