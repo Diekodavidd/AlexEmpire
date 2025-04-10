@@ -87,7 +87,7 @@ const Signup = () => {
           className="hurts"
         >
           <section className="signup">
-            <div className="container">
+            <div className="container" style={{backgroundColor:"#0B0C2A"}}>
               <div className="signup-content">
                 <div className="signup-form">
                   <h2 className="form-title">Sign up</h2>

@@ -88,7 +88,7 @@ const Login = () => {
                 <div >
 
                     <section className="signin">
-                        <div className="container">
+                        <div className="container" style={{backgroundColor:"#0B0C2A"}}>
                             <div className="signin-content">
                                 <div className="signin-image">
                                     <figure><img src={logor} alt="sing up image" /></figure>

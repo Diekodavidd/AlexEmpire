@@ -69,7 +69,7 @@ const Profile = () => {
                 {/* Signi Form */}
                 <div>
                     <section style={{ justifyContent: "center", padding: "30px", display: "flex", alignItems: "center" }} className="signup">
-                        <div style={{justifyContent:"center", justifyItems:"center"}} className='container'>
+                        <div style={{justifyContent:"center", justifyItems:"center" ,backgroundColor:"#0B0C2A"}} className='container' >
                             <h1 style={{color:"white"}}>My Profile</h1>
                             
                                 <img src={data && data.profilePic} alt="" style={{ marginLeft:"50px",width: "90px", height: "90px", borderRadius: "50%", marginRight: "10px" }} />
