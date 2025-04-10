@@ -123,7 +123,7 @@ useEffect(() => {
   // };
 
   return (
-    <div style={{ backgroundColor: "#0B0C2A" }}>
+    <div style={{ backgroundColor: "#F5F5F5" }}>
       <Header data={data} toggleCart={toggleCart} cartCount={cartItems.length} />
       <Hero />
       <Searchar />
@@ -165,11 +165,11 @@ useEffect(() => {
             <h3>Total: ${getTotal().toFixed(2)}</h3>
           </div>
           <button className="btn-buy">Buy Now</button>
-          <div>
-          <Link to="/cart" style={{ textDecoration: 'none', color: 'white', textAlign:"center"  }}>
-        <div style={{ padding: "10px", cursor: "pointer" }}>View Full Cart</div>
+          <button style={{ borderRadius:"50%", justifySelf:"center",marginLeft:"70px",marginTop:"10px",border:"none"}}>
+          <Link to="/cart" style={{ textDecoration: 'none', color: '#0B0C2A', textAlign:"center"  }}>
+        <div style={{ padding: "10px", cursor: "pointer" ,textDecoration: 'none' }}>View Full Cart</div>
         </Link>
-          </div>
+          </button>
         </div>
         
       )}

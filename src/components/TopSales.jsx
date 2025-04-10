@@ -39,7 +39,7 @@ const shuffleArray = (array) => {
               {product.imageUrl?.length > 0 && (
                 <img src={product.imageUrl[0]} alt={product.name} className="product-image" />
               )}
-              <h3>{product.name}</h3>
+              <h3 id='caw'>{product.name}</h3>
               <p className="category">{product.category}</p>
               <div className="rating">
                 ⭐ {product.rating} • {product.stock ? 'Out of stock' : 'In stock'}

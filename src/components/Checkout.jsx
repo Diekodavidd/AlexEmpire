@@ -52,13 +52,13 @@ const Checkout = () => {
 
   return (<>
     <Header data={data}  cartCount={cartItems.length} />
-    <div className="checkout-container py-5" style={{ backgroundColor: "#0B0C2A", color: "#F5F5F5" }}>
-      <div className="container">
+    <div className="checkout-container py-5" style={{ backgroundColor: "#F5F5F5", color: " #0B0C2A" }}>
+      <div className="container" style={{backgroundColor: "white", color: "#0B0C2A", padding: "20px", borderRadius: "10px"}}>
         <h2 className="mb-4 text-center" style={{ color: "#D4AF37" }}>Checkout</h2>
         <div className="row">
           {/* Billing Details */}
           <div className="col-md-7">
-            <h4 style={{ color: "#F5F5F5" }}>Billing Information</h4>
+            <h4 style={{ color: "#D4AF37" }}>Billing Information</h4>
             <form>
               <div className="mb-3">
                 {/* <label className="form-label"></label> */}

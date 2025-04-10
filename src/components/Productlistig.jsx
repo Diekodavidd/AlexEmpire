@@ -139,13 +139,13 @@ const ProductListingPage = () => {
   // };
 
 
-  return (<div style={{backgroundColor: "#0B0C2A"}} >
+  return (<div style={{backgroundColor: "#F5F5F5"}} >
   <Header data={userData} toggleCart={toggleCart} cartCount={cartItems.length}/>
     <div className="container mt-4">
       <div className="">
         {/* Sidebar */}
         <div className=" mt-5 mb-4 sidebar">
-          <div className="border p-3 rounded bg-dark text-white">
+          <div className="border p-3 rounded bg-light text-dark">
           <h5>Categories</h5>
             {categories.map((category, i) => (
               <div className="form-check" key={i}>
@@ -241,7 +241,7 @@ const ProductListingPage = () => {
         {/* Product Grid */}
         <main className=" main-content">
           <div className="d-flex justify-content-between align-items-center mt-5 mb-3">
-            <h4>
+            <h4 id="saw">
               {selectedCategory
                 ? `${selectedCategory} (${filteredProducts.length})`
                 : `All Products (${products.length})`}
@@ -275,12 +275,14 @@ const ProductListingPage = () => {
                     <Heart size={18} />
                   </div>
 
+                  <div className="muah">
                   <img
                     src={product.imageUrl?.[0] || "/placeholder.jpg"} // Ensure a fallback image
                     alt={product.name}
                     className="card-img-top p-3"
                     style={{ height: "200px", objectFit: "contain" }}
                   />
+                  </div>
                   <div className="card-body">
                     <h6 className="card-title">{product.name}</h6>
                     <p className="card-subtitle text-muted small">
@@ -303,8 +305,8 @@ const ProductListingPage = () => {
                     <div style={{position:"absolute", width:"30px", height:"30px",borderRadius:"50%" , backgroundColor:"red", textAlign:"center",
                       top:"245px", right:"0px", margin:"10px", color:"white", fontSize:"18px",fontWeight:"600", display:"flex", justifyContent:"center", cursor:"pointer"
                     }} onClick={() => addToCart(product)}> +          </div>
-                    <button className="btn btn-warning w-100 mt-2">
-                       <Link to={`/product/${product._id}`} className="btn btn-warning w-100 product-link"> View</Link>
+                    <button id="vad" className="btn w-100 mt-2">
+                       <Link to={`/product/${product._id}`} className="btn vad w-100 product-link"> View</Link>
                       
                     </button>
                   </div>
@@ -374,6 +376,11 @@ const ProductListingPage = () => {
             <h3>Total: ₦{getTotal().toFixed(2)}</h3>
           </div>
           <button className="btn-buy">Buy Now</button>
+        <button style={{ borderRadius:"50%", justifySelf:"center",marginLeft:"70px",marginTop:"10px",border:"none"}}>
+                  <Link to="/cart" style={{ textDecoration: 'none', color: '#0B0C2A', textAlign:"center"  }}>
+                <div style={{ padding: "10px", cursor: "pointer" ,textDecoration: 'none' }}>View Full Cart</div>
+                </Link>
+                  </button>
         </div>
       )}
     </div>

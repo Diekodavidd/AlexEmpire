@@ -33,7 +33,7 @@ const Admin = () => {
     if (!token) {
       navigate('/loginad');
     }else {
-      axios.get("http://localhost:7000/customer/verifyy", {
+      axios.get("https://backend-details-0xik.onrender.com/customer/verifyy", {
         headers: {
                  'Authorization': `Bearer ${token}`
                }
@@ -41,9 +41,9 @@ const Admin = () => {
                .then((response => {
                  console.log(response.data.User);
                 //  setUserData(response?.data?.User)
-                 console.log(response.data.User.username);
-                 setSaveName(response.data.User.username)
-                 setUserData(response.data.User.username)
+                 console.log(response.data.User.firstname);
+                 setSaveName(response.data.User.firsname)
+                 setUserData(response.data.User.firstname)
                   setData(response?.data?.User)
                   console.log(response?.data?.User);
                  
@@ -242,7 +242,7 @@ const Admin = () => {
 
   return (
     <div className="admin-container">
-      <Header data={saveName}/>
+      <Header data={userData}/>
           <Link to="/" className="logo-link">
             <img src={logo} alt="Logo" className="logo" width={80} height={80} />
           </Link>

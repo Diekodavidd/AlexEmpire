@@ -51,7 +51,7 @@ const CartPage = () => {
     return (
 <>
 <Header data={data}  cartCount={cartItems.length} />
-    <div className=" py-5 mt-5" style={{ backgroundColor: '#0B0C2A', color: 'white', minHeight: '100vh' }}>
+    <div className=" py-5 mt-5" style={{ backgroundColor: '#F5F5F5 ', color: '#0B0C2A', minHeight: '100vh' }}>
       <h2 className="text-center mb-5">🛍️ Your Shopping Cart</h2>
 
       {cartItems.length === 0 ? (
@@ -63,8 +63,8 @@ const CartPage = () => {
         <>
           <div className="row g-4">
             {cartItems.map((item) => (
-              <div key={item._id} className="col-md-6">
-                <div className="card bg-dark text-white">
+              <div key={item._id} className="col-md-6 has">
+                <div className="card bg-light text-dark" id='cax'>
                   <div className="row g-0 align-items-center">
                     <div className="col-4">
                       <img
@@ -79,14 +79,14 @@ const CartPage = () => {
                         <p className="card-text">${item.price}</p>
                         <div className="d-flex align-items-center">
                           <button
-                            className="btn btn-outline-light btn-sm me-2"
+                            className="btn btn-outline-dark btn-sm me-2"
                             onClick={() => updateQuantity(item._id, 'dec')}
                           >
                             -
                           </button>
                           <span className="me-2">{item.quantity}</span>
                           <button
-                            className="btn btn-outline-light btn-sm"
+                            className="btn btn-outline-dark btn-sm"
                             onClick={() => updateQuantity(item._id, 'inc')}
                           >
                             +

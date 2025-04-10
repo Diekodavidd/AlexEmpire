@@ -16,6 +16,13 @@
         background-color: #FF6347;
         border: none;
     }  
+    .has{
+      height:205px;
+    }
+    #cax{
+      height: 100%;
+      justify-items: center;
+    }
 
     .checkout-container{
         display: flex;
