@@ -9,65 +9,88 @@ import { CartContext } from './CartContext';
 import { Link, useNavigate } from 'react-router-dom';
 
 const ProductListingPage = () => {
-    const [products, setProducts] = useState([]);
-    const [categories, setCategories] = useState([]);
-    const [selectedBrands, setSelectedBrands] = useState([]);
-    const [selectedRating, setSelectedRating] = useState([]);
-    const [priceRange, setPriceRange] = useState({ min: 0, max: 10000 });
-    const [selectedCategory, setSelectedCategory] = useState(null);
-    
-      // const [cartItems, setCartItems] = useState([]);
-      const [isCartOpen, setIsCartOpen] = useState(false);
-    const [userData, setUserData] = useState(null); // To store user info
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [selectedBrands, setSelectedBrands] = useState([]);
+  const [selectedRating, setSelectedRating] = useState([]);
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 10000 });
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
-    const { cartItems, addToCart, updateQuantity, removeFromCart, getTotal } = useContext(CartContext);
-  
-    const navigate = useNavigate();
-  
-    // Get the token from local storage and check its validity
-    let storedToke = localStorage.getItem("existingToke");
-  
-    useEffect(() => {
-      if (!storedToke) {
-        navigate("/login"); // Redirect to login page if no token
-        return;
+  // const [cartItems, setCartItems] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [userData, setUserData] = useState(null); // To store user info
+
+  const { cartItems, addToCart, updateQuantity, removeFromCart, getTotal } = useContext(CartContext);
+
+  const navigate = useNavigate();
+
+  // Get the token from local storage and check its validity
+  let storedToke = localStorage.getItem("existingToke");
+
+  useEffect(() => {
+    if (!storedToke) {
+      navigate("/login"); // Redirect to login page if no token
+      return;
+    }
+
+    // Make a request to verify the token
+    axios
+      .get("https://backend-details-0xik.onrender.com/customer/verify", {
+        headers: {
+          Authorization: `Bearer ${storedToke}`,
+        },
+      })
+      .then((response) => {
+        // Successfully verified the token, store the user data
+        setUserData(response.data.User);
+      })
+      .catch((err) => {
+        // Token is invalid or expired, redirect to login
+        console.log(err?.response?.data?.message);
+        navigate("/login");
+      });
+
+    
+
+    // Fetch products
+    const fetchProducts = async () => {
+      try {
+        const res = await axios.get("https://backend-details-0xik.onrender.com/customer/products");
+        setProducts(res.data);
+
+        const uniqueCategories = [
+          "All Categories", // Adding 'All Categories' option at the top
+          ...new Set(res.data.map((product) => product.category)),
+        ];
+        setCategories(uniqueCategories);
+      } catch (err) {
+        console.error("Failed to fetch products", err);
       }
-  
-      // Make a request to verify the token
-      axios
-        .get("https://backend-details-0xik.onrender.com/customer/verify", {
-          headers: {
-            Authorization: `Bearer ${storedToke}`,
-          },
-        })
-        .then((response) => {
-          // Successfully verified the token, store the user data
-          setUserData(response.data.User);
-        })
-        .catch((err) => {
-          // Token is invalid or expired, redirect to login
-          console.log(err?.response?.data?.message);
-          navigate("/login");
-        });
-  
-      // Fetch products
-      const fetchProducts = async () => {
-        try {
-          const res = await axios.get("https://backend-details-0xik.onrender.com/customer/products");
-          setProducts(res.data);
-  
-          const uniqueCategories = [
-            "All Categories", // Adding 'All Categories' option at the top
-            ...new Set(res.data.map((product) => product.category)),
-          ];
-          setCategories(uniqueCategories);
-        } catch (err) {
-          console.error("Failed to fetch products", err);
-        }
-      };
-  
-      fetchProducts();
-    }, [storedToke, navigate]);
+    };
+
+    fetchProducts();
+  }, [storedToke, navigate]);
+
+
+  const [favoriteItems, setFavoriteItems] = useState(() => {
+    const storedFavorites = localStorage.getItem("favorites");
+    return storedFavorites ? JSON.parse(storedFavorites) : [];
+  });
+
+  const toggleFavorite = (productId) => {
+    setFavoriteItems((prev) => {
+      let updated;
+      if (prev.includes(productId)) {
+        updated = prev.filter((id) => id !== productId);
+      } else {
+        updated = [...prev, productId];
+      }
+
+      // Save to localStorage
+      localStorage.setItem("favorites", JSON.stringify(updated));
+      return updated;
+    });
+  };
 
   // Filter products based on the selected category
   const filteredProducts = products
@@ -76,7 +99,7 @@ const ProductListingPage = () => {
         ? product.category === selectedCategory
         : true
     )
-    const filteredProduct = products
+  const filteredProduct = products
     .filter((product) =>
       selectedBrands.length > 0
         ? selectedBrands.includes(product.brand)
@@ -92,6 +115,14 @@ const ProductListingPage = () => {
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
   };
+
+  const [sortOption, setSortOption] = useState("Relevance");
+
+const sortedProducts = [...filteredProducts].sort((a, b) => {
+  if (sortOption === "Price: Low to High") return a.price - b.price;
+  if (sortOption === "Price: High to Low") return b.price - a.price;
+  return 0;
+});
 
   // const addToCart = (product) => {
   //   const existing = cartItems.find((item) => item._id === product._id);
@@ -139,14 +170,14 @@ const ProductListingPage = () => {
   // };
 
 
-  return (<div style={{backgroundColor: "#F5F5F5"}} >
-  <Header data={userData} toggleCart={toggleCart} cartCount={cartItems.length}/>
+  return (<div style={{ backgroundColor: "#F5F5F5" }} >
+    <Header data={userData} toggleCart={toggleCart} cartCount={cartItems.length} />
     <div className="container mt-4">
       <div className="">
         {/* Sidebar */}
         <div className=" mt-5 mb-4 sidebar">
           <div className="border p-3 rounded bg-light text-dark">
-          <h5>Categories</h5>
+            <h5>Categories</h5>
             {categories.map((category, i) => (
               <div className="form-check" key={i}>
                 <input
@@ -166,7 +197,7 @@ const ProductListingPage = () => {
                 </div>
               </div>
             ))}
-         {/* <hr />
+            {/* <hr />
             <h5>Brands</h5>
             {["Brand A", "Brand B", "Brand C", "Brand D", "Brand E"].map((brand, i) => (
               <div className="form-check" key={i}>
@@ -178,7 +209,7 @@ const ProductListingPage = () => {
                   onChange={() => {
                     setSelectedBrands((prev) =>
                       prev.includes(brand)
-                        ? prev.filter((b) => b !== brand)3
+                        ? prev.filter((b) => b !== brand)
                         : [...prev, brand]
                     );
                   }}
@@ -246,42 +277,51 @@ const ProductListingPage = () => {
                 ? `${selectedCategory} (${filteredProducts.length})`
                 : `All Products (${products.length})`}
             </h4>
-            
-            
-            <select className=" w-auto waxq">
-              <option>Relevance</option>
-              <option>Price: Low to High</option>
-              <option>Price: High to Low</option>
-            </select>
+
+
             <select
-  className="w-auto daxp"
-  value={selectedCategory}
-  onChange={(e) => setSelectedCategory(e.target.value)}
+  className="w-auto waxq"
+  value={sortOption}
+  onChange={(e) => setSortOption(e.target.value)}
 >
-  <option disabled>Categories</option>
-  {categories.map((category, i) => (
-    <option key={i} value={category}>
-      {category}
-    </option>
-  ))}
+  <option>Relevance</option>
+  <option>Price: Low to High</option>
+  <option>Price: High to Low</option>
 </select>
+
+            <select
+              className="w-auto daxp"
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              <option disabled>Categories</option>
+              {categories.map((category, i) => (
+                <option key={i} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="row g-3">
-            {filteredProducts.map((product) => (
+            {sortedProducts.map((product) => (
               <div className="col-md-4" key={product._id}>
                 <div className="card h-100 position-relative">
-                  <div className="position-absolute top-0 end-0 m-2 text-muted">
-                    <Heart size={18} />
+                  <div className="position-absolute top-0 end-0 m-2 text-muted" onClick={() => toggleFavorite(product._id)} style={{ cursor: "pointer" }}>
+                    <Heart
+                      size={18}
+                      color={favoriteItems.includes(product._id) ? "red" : "gray"}
+                      fill={favoriteItems.includes(product._id) ? "red" : "none"}
+                    />
                   </div>
 
                   <div className="muah">
-                  <img
-                    src={product.imageUrl?.[0] || "/placeholder.jpg"} // Ensure a fallback image
-                    alt={product.name}
-                    className="card-img-top p-3"
-                    style={{ height: "200px", objectFit: "contain" }}
-                  />
+                    <img
+                      src={product.imageUrl?.[0] || "/placeholder.jpg"} // Ensure a fallback image
+                      alt={product.name}
+                      className="card-img-top p-3"
+                      style={{ height: "200px", objectFit: "contain" }}
+                    />
                   </div>
                   <div className="card-body">
                     <h6 className="card-title">{product.name}</h6>
@@ -302,12 +342,13 @@ const ProductListingPage = () => {
                         ₦{product.originalPrice?.toFixed(2) || 0}
                       </small>
                     </div>
-                    <div style={{position:"absolute", width:"30px", height:"30px",borderRadius:"50%" , backgroundColor:"red", textAlign:"center",
-                      top:"245px", right:"0px", margin:"10px", color:"white", fontSize:"18px",fontWeight:"600", display:"flex", justifyContent:"center", cursor:"pointer"
+                    <div style={{
+                      position: "absolute", width: "30px", height: "30px", borderRadius: "50%", backgroundColor: "red", textAlign: "center",
+                      top: "245px", right: "0px", margin: "10px", color: "white", fontSize: "18px", fontWeight: "600", display: "flex", justifyContent: "center", cursor: "pointer"
                     }} onClick={() => addToCart(product)}> +          </div>
                     <button id="vad" className="btn w-100 mt-2">
-                       <Link to={`/product/${product._id}`} className="btn vad w-100 product-link"> View</Link>
-                      
+                      <Link to={`/product/${product._id}`} className="btn vad w-100 product-link"> View</Link>
+
                     </button>
                   </div>
                 </div>
@@ -340,50 +381,50 @@ const ProductListingPage = () => {
 
 
     {isCartOpen && (
-        <div className={`cart ${isCartOpen ? "active" : ""}`}>
-          <h2 className="cart-title">Your Cart</h2>
-          <div className="cart-content">
-            {cartItems.map((item) => (
-              <div className="cart-box" key={item._id}>
-                <img src={item.image} alt="" className="cart-img" />
-                <div className="cart-details">
-                  <h2 className="cart-product-title">{item.name}</h2>
-                  <span className="cart-price">₦{item.price}</span>
-                  <div className="cart-quantity">
-                    <button onClick={() => updateQuantity(item._id, "dec")}>-</button>
-                    <span className="number">{item.quantity}</span>
-                    <button onClick={() => updateQuantity(item._id, "inc")}>+</button>
-                  </div>
-                </div>
-                <div
-                  className="cart-remove"
-                  onClick={() => removeFromCart(item._id)}
-                >
-                  🗑
+      <div className={`cart ${isCartOpen ? "active" : ""}`}>
+        <h2 className="cart-title">Your Cart</h2>
+        <div className="cart-content">
+          {cartItems.map((item) => (
+            <div className="cart-box" key={item._id}>
+              <img src={item.image} alt="" className="cart-img" />
+              <div className="cart-details">
+                <h2 className="cart-product-title">{item.name}</h2>
+                <span className="cart-price">₦{item.price}</span>
+                <div className="cart-quantity">
+                  <button onClick={() => updateQuantity(item._id, "dec")}>-</button>
+                  <span className="number">{item.quantity}</span>
+                  <button onClick={() => updateQuantity(item._id, "inc")}>+</button>
                 </div>
               </div>
-            ))}
-            <button
-              style={{ width: "10%", height: "8%", border: "none", backgroundColor: "transparent" }}
-              onClick={() => setIsCartOpen(false)}
-              id="cart-close"
-            >
-              x
-            </button>
-          </div>
-
-          <div className="total">
-            <h3>Total: ₦{getTotal().toFixed(2)}</h3>
-          </div>
-          <button className="btn-buy">Buy Now</button>
-        <button style={{ borderRadius:"50%", justifySelf:"center",marginLeft:"70px",marginTop:"10px",border:"none"}}>
-                  <Link to="/cart" style={{ textDecoration: 'none', color: '#0B0C2A', textAlign:"center"  }}>
-                <div style={{ padding: "10px", cursor: "pointer" ,textDecoration: 'none' }}>View Full Cart</div>
-                </Link>
-                  </button>
+              <div
+                className="cart-remove"
+                onClick={() => removeFromCart(item._id)}
+              >
+                🗑
+              </div>
+            </div>
+          ))}
+          <button
+            style={{ width: "10%", height: "8%", border: "none", backgroundColor: "transparent" }}
+            onClick={() => setIsCartOpen(false)}
+            id="cart-close"
+          >
+            x
+          </button>
         </div>
-      )}
-    </div>
+
+        <div className="total">
+          <h3>Total: ₦{getTotal().toFixed(2)}</h3>
+        </div>
+        <button className="btn-buy">Buy Now</button>
+        <button style={{ borderRadius: "50%", justifySelf: "center", marginLeft: "70px", marginTop: "10px", border: "none" }}>
+          <Link to="/cart" style={{ textDecoration: 'none', color: '#0B0C2A', textAlign: "center" }}>
+            <div style={{ padding: "10px", cursor: "pointer", textDecoration: 'none' }}>View Full Cart</div>
+          </Link>
+        </button>
+      </div>
+    )}
+  </div>
   );
 };
 
