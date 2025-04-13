@@ -99,6 +99,14 @@ const Profile = () => {
         //   navigate("/login"); // Redirect to login page
         // }
     }, [])
+       
+
+    
+  const handleGoBack = () => {
+    navigate(-1); // Goes back to the previous page in history
+  };
+
+
 
 
     return (
@@ -169,7 +177,12 @@ const Profile = () => {
                                             </div>
                                         </div>
                         </div>
+                        <button onClick={handleGoBack} className="laz ">
+                ← Go Back
+              </button>
                     </section>
+                    
+               
                 </div>
 
             </div>

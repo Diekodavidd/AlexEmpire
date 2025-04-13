@@ -9,6 +9,8 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AnimatedBackgrounds from './Amiatio';
 
 const Contact = () => {
+  
+      const navigate = useNavigate()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -27,6 +29,12 @@ const Contact = () => {
     e.preventDefault();
     console.log("Form submitted:", formData);
     // You can send the form data to a backend or service here
+
+    
+  };
+
+  const handleGoBack = () => {
+    navigate(-1); // Goes back to the previous page in history
   };
 
   return (
@@ -103,6 +111,10 @@ const Contact = () => {
             Send Message
           </button>
         </form>
+
+        <button onClick={handleGoBack} className="laz ">
+                ← Go Back
+              </button>
       </div>
     </div>
                     </section>
