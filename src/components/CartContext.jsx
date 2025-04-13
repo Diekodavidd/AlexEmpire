@@ -23,25 +23,25 @@ export const CartProvider = ({ children }) => {
   }, [cartItems, isCartLoaded]);
 
   const addToCart = (product) => {
-    const exists = cartItems.find((item) => item._id === product._id);
+    const exists = cartItems.find((item) => item.productId === product._id);
+  
     if (exists) {
-      // Optionally, you can increase the quantity if the product already exists in the cart
-      setCartItems(prevItems =>
-        prevItems.map(item =>
-          item._id === product._id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        )
-      );
-    } else {
-      setCartItems([...cartItems, {
-        ...product,
-        productId: product._id,   
-        quantity: 1,
-        image: product.imageUrl?.[0] || "default-image.jpg",  // Use a default image if undefined
-      }]);
+      // Instead of increasing quantity, show a message
+      alert("This item is already in your cart,You can increase the quantity in your cart"); 
+      return;
     }
+  
+    setCartItems([
+      ...cartItems,
+      {
+        ...product,
+        productId: product._id,
+        quantity: 1,
+        image: product.imageUrl?.[0] || "default-image.jpg",
+      },
+    ]);
   };
+  
 
   const updateQuantity = (_id, action) => {
     setCartItems((prevItems) =>

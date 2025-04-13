@@ -7,9 +7,31 @@
         left: 0;
         width: 100%;
         z-index: 999; /* Make sure it stays above everything */
-        padding: 5px 20px;
+        padding: 5px 0px 5px 10px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* optional shadow */
       }
+
+      .rotate-chevron {
+        transform: rotate(180deg);
+      }
+      .cart-wrapper {
+        position: relative;
+      }
+      
+      .cart-item-count {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: crimson;
+        color: white;
+        font-size: 12px;
+        padding: 2px 6px;
+        border-radius: 50%;
+        font-weight: bold;
+        min-width: 18px;
+        text-align: center;
+      }
+      
       .dadf{
           position: absolute;
           top: -5px;
@@ -237,13 +259,13 @@ button:hover {
   text-align: center;
 }
 
-.nav-links.active {
+/* .nav-links.active {
   display: flex;
   position: fixed;
-  top: 70px; /* Adjust this value based on your header height */
-  right: 20px;
-  padding: 20px; /* slide in */
-}
+  top: 30px; 
+  right: 5px;
+  padding: 10px; 
+} */
 
 @media (max-width: 768px) {
   .nav-links {
@@ -389,6 +411,28 @@ button:hover {
     margin: -3rem auto 4rem;
   }
   
+  .profile-pic.pulse-once {
+    animation: pulse 1.5s ease-out 1;
+  }
+  
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.6);
+    }
+    70% {
+      box-shadow: 0 0 0 12px rgba(212, 175, 55, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(212, 175, 55, 0);
+    }
+  }
+  
+  /* Optional: hide name on small screens */
+  @media (max-width: 600px) {
+    .username {
+      display: none;
+    }
+  }
   
   .categories {
     display: flex;
@@ -552,6 +596,30 @@ button:hover {
     position: relative;
     overflow: hidden;
     border-radius: 12px;
+  }
+  .profile-section {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 999px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .profile-section:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .profile-section img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .profile-section h1 {
+    font-size: 16px;
+    margin: 0 8px;
+    color: white;
   }
   
   .category-card img {

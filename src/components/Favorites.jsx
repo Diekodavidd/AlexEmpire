@@ -93,21 +93,10 @@ const Favorites = () => {
                       <div className="card-body">
                         <h5 className="card-title">{item.name}</h5>
                         <p className="card-text">₦{item.price}</p>
-                        {/* <div className="d-flex align-items-center">
-                          <button
-                            className="btn btn-outline-dark btn-sm me-2"
-                            onClick={() => updateQuantity(item._id, 'dec')}
-                          >
-                            -
-                          </button>
-                          <span className="me-2">{item.quantity || 1}</span>
-                          <button
-                            className="btn btn-outline-dark btn-sm"
-                            onClick={() => updateQuantity(item._id, 'inc')}
-                          >
-                            +
-                          </button>
-                        </div> */}
+                        <div className="d-flex align-items-center">
+                          <Link to={`/product/${item._id}`} className="product-link"> <button className="view-button">View</button> </Link>
+                          
+                        </div>
                         <button
                           className="btn btn-sm btn-danger mt-3"
                           onClick={() => removeFromFavorites(item._id)}

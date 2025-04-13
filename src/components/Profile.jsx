@@ -5,9 +5,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import logo from "../assets/lyom.png";
 import './logi.css';
 import BouncingBalls from "./BouncingBalls";
+import { Home, List, Phone, Heart, User, Settings, LogOut, Package } from "lucide-react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AnimatedBackgrounds from './Amiatio';
 import { CartContext } from './CartContext';
+import { jwtDecode } from 'jwt-decode';
 
 const Profile = () => {
 
@@ -20,20 +22,63 @@ const Profile = () => {
     // Safely retrieve existingToke from localStorage
     let storedToke = localStorage.getItem("existingToke")
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false);
     const [data, setData] = useState()
     const [Imagefile, setImagefile] = useState(null);
-      const { cartItems, setCartItems, addToCart, updateQuantity, removeFromCart, getTotal } = useContext(CartContext);
-    
-    const handleLogout = () => {
-        localStorage.removeItem("existingToke"); // Clear the token
-        localStorage.removeItem("existingCustomer"); // Clear the customer data
-        localStorage.removeItem("cart"); // Clear the customer data
-        setCartItems([]); // clear cart from memory
-        localStorage.clear();
+    const { cartItems, setCartItems, addToCart, updateQuantity, removeFromCart, getTotal } = useContext(CartContext);
+      
+      const handleLogout = async () => {
+        setLoading(true);
+        try {
+          const token = localStorage.getItem("existingToke");
+      
+          if (token && cartItems.length > 0) {
+            const decodedToken = jwtDecode(token);
+            const userId = decodedToken.userId;
+      
+            const cleanedCartItems = cartItems.map(item => ({
+              productId: item.productId,
+              quantity: item.quantity
+            }));
+      
+            await axios.post(
+              "https://backend-details-0xik.onrender.com/customer/cart/save",
+              { userId, items: cleanedCartItems },
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+      
+            console.log("Cart saved before logout.");
+          }
+      
+          // Clear stored token and cart
+          localStorage.removeItem("existingToke");
+          localStorage.removeItem("cart");
+          setCartItems([]); // Clear from context
+      
+          // Redirect user
+          navigate("/login");
+      
+          alert("You've been logged out successfully!");
+        } catch (error) {
+          console.error("Failed to save cart on logout:", error);
+      
+          // Still proceed to logout
+          localStorage.removeItem("existingToke");
+          localStorage.removeItem("cart");
+          localStorage.clear();
+          setCartItems([]);
+          navigate("/login");
+        }finally {
+            setLoading(false); 
+          }
+      };
+      
 
-        alert("Logout successful!"); // Optional: Show a message
-        navigate("/login"); // Redirect to login
-    };
+  
     
     useEffect(() => {
 
@@ -101,10 +146,26 @@ const Profile = () => {
                                                     border: "none",
                                                     borderRadius: "5px",
                                                     cursor: "pointer",
-                                                    fontWeight: "bold"
-                                                }} type="button" data-mdb-button-init data-mdb-ripple-init className="btn btn-primary btn-lg">
-                                                    
-                                                      Logout</button>
+                                                    fontWeight: "bold", 
+                                                    display: "flex",
+                                                     alignItems: "center",
+                                                      gap: "6px", 
+                                                      opacity: loading ? 0.7 : 1
+                                                }} 
+                                                type="button" data-mdb-button-init data-mdb-ripple-init 
+                                                className="btn btn-primary btn-lg"
+                                                disabled={loading}
+                                                >{loading ? (
+                                                    <div className="spinner-border spinner-border-sm text-light" role="status">
+                                                     
+                                                    </div>
+                                                  ) : (
+                                                    <>
+                                                      <LogOut size={18} style={{ color: "black" }} />
+                                                      <div>Logout</div>
+                                                    </>
+                                                  )}
+                                                    </button>
                                             </div>
                                         </div>
                         </div>

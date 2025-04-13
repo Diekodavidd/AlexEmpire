@@ -38,6 +38,10 @@ const ProductDetails = () => {
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const handleGoBack = () => {
+        navigate(-1); // Goes back to the previous page in history
+      };
+
     useEffect(() => {
         const fetchProduct = async () => {
             try {
@@ -125,11 +129,8 @@ const ProductDetails = () => {
                 <img key={index} src={image} alt={product.name} style={{ width: "200px", margin: "10px" }} />
               ))}
 
-              <button
-                onClick={() => navigate("/list")}
-                className="laz"
-              >
-                ← Back
+                <button onClick={handleGoBack} className="laz ">
+                ← Go Back
               </button>
             </div>
           </div>
