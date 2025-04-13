@@ -19,7 +19,7 @@ const Checkout = () => {
         const [data, setData] = useState();
         
         const [isCartLoaded, setIsCartLoaded] = useState(false); // NEW
-        const { cartItems,setCartItems, addToCart, updateQuantity, removeFromCart, getTotal } = useContext(CartContext);
+        const { cartItems,setCartItems, addToCart, updateQuantity, removeFromCart, getTotal, getTotald } = useContext(CartContext);
        
     
       // Verify customer token
@@ -107,7 +107,7 @@ const Checkout = () => {
                 <ul className="list-group mb-3">
                   <li className="list-group-item bg-transparent border-light d-flex justify-content-between text-primary">
                     <span>Subtotal</span>
-                    <strong>₦{getTotal().toFixed(2) }</strong>
+                    <strong>₦{getTotald().toFixed(2) }</strong>
                   </li>
                   <li className="list-group-item bg-transparent border-light d-flex justify-content-between text-primary">
                     <span>Shipping</span>

@@ -15,7 +15,7 @@ export const CartProvider = ({ children }) => {
     setIsCartLoaded(true);
   }, []);
 
-  // Save to localStorage
+  // Save to localStorage whenever cartItems state changes
   useEffect(() => {
     if (isCartLoaded) {
       localStorage.setItem("cart", JSON.stringify(cartItems));
@@ -25,14 +25,22 @@ export const CartProvider = ({ children }) => {
   const addToCart = (product) => {
     const exists = cartItems.find((item) => item._id === product._id);
     if (exists) {
-      alert("Product already in cart");
-      return;
+      // Optionally, you can increase the quantity if the product already exists in the cart
+      setCartItems(prevItems =>
+        prevItems.map(item =>
+          item._id === product._id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      );
+    } else {
+      setCartItems([...cartItems, {
+        ...product,
+        productId: product._id,   
+        quantity: 1,
+        image: product.imageUrl?.[0] || "default-image.jpg",  // Use a default image if undefined
+      }]);
     }
-    setCartItems([...cartItems, {
-      ...product,
-      quantity: 1,
-      image: product.imageUrl?.[0] || "",
-    }]);
   };
 
   const updateQuantity = (_id, action) => {
@@ -41,9 +49,10 @@ export const CartProvider = ({ children }) => {
         item._id === _id
           ? {
               ...item,
-              quantity: action === "inc"
-                ? item.quantity + 1
-                : item.quantity > 1 ? item.quantity - 1 : item.quantity
+              quantity:
+                action === "inc"
+                  ? item.quantity + 1
+                  : Math.max(item.quantity - 1, 1)  // Ensure quantity doesn't go below 1
             }
           : item
       )
@@ -51,11 +60,19 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (_id) => {
-    setCartItems(cartItems.filter((item) => item._id !== _id));
+    setCartItems((prevItems) => {
+      const updatedCart = prevItems.filter((item) => item._id !== _id);
+      // Update localStorage immediately after removing the item
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      return updatedCart;
+    });
   };
 
-  const getTotal = () => {
+  const getTotald = () => {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+  const getTotal = () => {
+    return cartItems.reduce((total, item) => total + item.productId.price * item.quantity, 0);
   };
 
   return (
@@ -66,6 +83,7 @@ export const CartProvider = ({ children }) => {
         updateQuantity,
         removeFromCart,
         getTotal,
+        getTotald,
         setCartItems
       }}
     >

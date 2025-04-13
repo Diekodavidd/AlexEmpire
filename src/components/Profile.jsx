@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import './style.css'
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,6 +7,7 @@ import './logi.css';
 import BouncingBalls from "./BouncingBalls";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AnimatedBackgrounds from './Amiatio';
+import { CartContext } from './CartContext';
 
 const Profile = () => {
 
@@ -21,9 +22,15 @@ const Profile = () => {
     const navigate = useNavigate()
     const [data, setData] = useState()
     const [Imagefile, setImagefile] = useState(null);
+      const { cartItems, setCartItems, addToCart, updateQuantity, removeFromCart, getTotal } = useContext(CartContext);
+    
     const handleLogout = () => {
         localStorage.removeItem("existingToke"); // Clear the token
         localStorage.removeItem("existingCustomer"); // Clear the customer data
+        localStorage.removeItem("cart"); // Clear the customer data
+        setCartItems([]); // clear cart from memory
+        localStorage.clear();
+
         alert("Logout successful!"); // Optional: Show a message
         navigate("/login"); // Redirect to login
     };

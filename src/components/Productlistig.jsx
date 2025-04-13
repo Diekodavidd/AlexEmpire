@@ -20,7 +20,7 @@ const ProductListingPage = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [userData, setUserData] = useState(null); // To store user info
 
-  const { cartItems, addToCart, updateQuantity, removeFromCart, getTotal } = useContext(CartContext);
+  const { cartItems, addToCart, updateQuantity, removeFromCart, getTotal, getTotald } = useContext(CartContext);
 
   const navigate = useNavigate();
 
@@ -380,50 +380,65 @@ const sortedProducts = [...filteredProducts].sort((a, b) => {
     </div>
 
 
-    {isCartOpen && (
-      <div className={`cart ${isCartOpen ? "active" : ""}`}>
-        <h2 className="cart-title">Your Cart</h2>
-        <div className="cart-content">
-          {cartItems.map((item) => (
-            <div className="cart-box" key={item._id}>
-              <img src={item.image} alt="" className="cart-img" />
-              <div className="cart-details">
-                <h2 className="cart-product-title">{item.name}</h2>
-                <span className="cart-price">₦{item.price}</span>
-                <div className="cart-quantity">
-                  <button onClick={() => updateQuantity(item._id, "dec")}>-</button>
-                  <span className="number">{item.quantity}</span>
-                  <button onClick={() => updateQuantity(item._id, "inc")}>+</button>
-                </div>
-              </div>
-              <div
-                className="cart-remove"
-                onClick={() => removeFromCart(item._id)}
-              >
-                🗑
-              </div>
-            </div>
-          ))}
-          <button
-            style={{ width: "10%", height: "8%", border: "none", backgroundColor: "transparent" }}
-            onClick={() => setIsCartOpen(false)}
-            id="cart-close"
-          >
-            x
-          </button>
-        </div>
-
-        <div className="total">
-          <h3>Total: ₦{getTotal().toFixed(2)}</h3>
-        </div>
-        <button className="btn-buy">Buy Now</button>
-        <button style={{ borderRadius: "50%", justifySelf: "center", marginLeft: "70px", marginTop: "10px", border: "none" }}>
-          <Link to="/cart" style={{ textDecoration: 'none', color: '#0B0C2A', textAlign: "center" }}>
-            <div style={{ padding: "10px", cursor: "pointer", textDecoration: 'none' }}>View Full Cart</div>
-          </Link>
-        </button>
-      </div>
-    )}
+   {isCartOpen && (
+           <div className="cart active">
+             <h2 className="cart-title">Your Cart</h2>
+             <div className="cart-content">
+             <div className="cart-content">
+             {cartItems.length > 0 ? (
+     cartItems.map((item) => (
+       <div className="cart-box" key={item._id}>
+         <img
+           src={item.image || "/placeholder.png"}
+           alt={item.name || "Item"}
+           className="cart-img"
+         />
+         <div className="cart-details">
+           <h2 className="cart-product-title">{item.name}</h2>
+           <span className="cart-price">₦{item.price?.toLocaleString()}</span>
+           <div className="cart-quantity">
+             <button onClick={() => updateQuantity(item._id, "dec")}>-</button>
+             <span className="number">{item.quantity}</span>
+             <button onClick={() => updateQuantity(item._id, "inc")}>+</button>
+           </div>
+         </div>
+         <div className="cart-remove" onClick={() => removeFromCart(item._id)}>
+           🗑
+         </div>
+       </div>
+     ))
+   ) : (
+     <p>Your cart is empty</p>
+   )}
+   
+   
+             </div>
+   
+               <button
+                 style={{ width: "10%", height: "8%", border: "none", backgroundColor: "transparent" }}
+                 onClick={() => setIsCartOpen(false)}
+                 id="cart-close"
+               >
+                 x
+               </button>
+             </div>
+             <div className="total">
+               <h3>Total: ${getTotald().toFixed(2)}</h3>
+             </div>
+             <button className="btn-buy">Buy Now</button>
+             <button style={{
+               borderRadius: "50%",
+               justifySelf: "center",
+               marginLeft: "70px",
+               marginTop: "10px",
+               border: "none"
+             }}>
+               <Link to="/cart" style={{ textDecoration: 'none', color: '#0B0C2A', textAlign: "center" }}>
+                 <div style={{ padding: "10px", cursor: "pointer" }}>View Full Cart</div>
+               </Link>
+             </button>
+           </div>
+         )}
   </div>
   );
 };

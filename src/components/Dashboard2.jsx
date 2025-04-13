@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import './style.css';
 import './logi.css';
-import { Link,  useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Hero from './Hero';
 import TopSales from './TopSales';
@@ -12,22 +12,20 @@ import Searchar from './Searchar';
 import ExploreMore from './ExploreMore';
 import Newsletter from './Newsletter';
 import Footer from './Footer';
-import { useContext } from 'react';
 import { CartContext } from './CartContext';
+import { jwtDecode } from 'jwt-decode';
 
 const Dashboard2 = () => {
   const storedToke = localStorage.getItem("existingToke");
   const navigate = useNavigate();
   const [data, setData] = useState();
   const [products, setProducts] = useState([]);
-  // const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isCartLoaded, setIsCartLoaded] = useState(false); // NEW
+  const [isCartLoaded, setIsCartLoaded] = useState(false);
 
-  
-      const { cartItems,setCartItems, addToCart, updateQuantity, removeFromCart, getTotal } = useContext(CartContext);
+  const { cartItems, setCartItems, addToCart, updateQuantity, removeFromCart, getTotal, getTotald } = useContext(CartContext);
 
-  // Verify customer token
+  // ✅ Verify customer token
   useEffect(() => {
     axios.get("https://backend-details-0xik.onrender.com/customer/verify", {
       headers: {
@@ -43,23 +41,24 @@ const Dashboard2 = () => {
       });
   }, []);
 
- // Load cart from localStorage on initial load
-useEffect(() => {
-  const storedCart = localStorage.getItem("cart");
-  if (storedCart) {
-    setCartItems(JSON.parse(storedCart));
-  }
-  setIsCartLoaded(true); // Mark cart as loaded
-}, []);
+  // // ✅ Load cart from localStorage on initial load
+  // useEffect(() => {
+  //   const storedCart = localStorage.getItem("cart");
+  //   if (storedCart) {
+  //     setCartItems(JSON.parse(storedCart));
+  //   }
+  //   setIsCartLoaded(true);
+  // }, []);
 
-// Save to localStorage every time cartItems change
-useEffect(() => {
-  if (isCartLoaded) {
-    localStorage.setItem("cart", JSON.stringify(cartItems));
-  }
-}, [cartItems, isCartLoaded]); // depend on isCartLoaded too
+  // ✅ Save cart to localStorage when changed
+  useEffect(() => {
+    if (isCartLoaded) {
+      localStorage.setItem("cart", JSON.stringify(cartItems));
+    }
+    setIsCartLoaded(true);
+  }, [cartItems, isCartLoaded]);
 
-  // Fetch products
+  // ✅ Fetch products
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -72,55 +71,55 @@ useEffect(() => {
     fetchProducts();
   }, []);
 
-  // Cart controls
-  const toggleCart = () => setIsCartOpen(!isCartOpen);
+  // ✅ Fetch cart from server
+  useEffect(() => {
+    const fetchCart = async () => {
+      try {
+        const token = localStorage.getItem("existingToke");
+        if (!token) {
+          setCartItems([]); // also clear in-memory
+          setIsCartLoaded(true);
+          return;
+        }
+        const decodedToken = jwtDecode(token); // ✅ Safe decode
+        const userId = decodedToken.userId;
+  
+        const { data } = await axios.get(
+          `https://backend-details-0xik.onrender.com/customer/get-cart/${userId}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+  
+        const localCart = JSON.parse(localStorage.getItem("cart")) || [];
+         // Correctly accessing the items array inside cart
+    const serverCart = data.cart?.items || [];  // Accessing cart.items from the response
+    console.log("Server Cart Data:", serverCart);
+        console.log("Local Cart:", localCart);
+        console.log("Cart Items:", cartItems); // Check if cartItems is populated
 
-  const saveCartToLocalStorage = (cartItems) => {
-    localStorage.setItem("cart", JSON.stringify(cartItems));
-  };
+        
+  
+        // Merge the local and server cart or prioritize the server cart if available
+        const finalCart = serverCart.length > 0 ? serverCart : localCart;
+        
+         // Set the cartItems to the context using setCartItems
+         setCartItems(finalCart); // This updates the context's cartItems state
 
-  // const addToCart = (product) => {
-  //   const existing = cartItems.find((item) => item._id === product._id);
-  //   if (existing) {
-  //     alert("Product already in cart");
-  //     return;
-  //   }
-  //   setCartItems([...cartItems, {
-  //     ...product,
-  //     quantity: 1,
-  //     image: product.imageUrl?.[0] || "",
-  //   }]);
-  // };
+         // Persist to local storage after updating the context
+         localStorage.setItem("cart", JSON.stringify(serverCart));
+       } catch (err) {
+         console.error("Error fetching cart:", err);
+       }
+     };
+     console.log("Cart Items:", cartItems); // Check if cartItems is populated
+
+  
+    fetchCart();
+  }, [setCartItems]);
   
 
-  // const updateQuantity = (_id, action) => {
-  //   setCartItems((prevItems) =>
-  //     prevItems.map((item) =>
-  //       item._id === _id
-  //         ? {
-  //             ...item,
-  //             quantity:
-  //               action === "inc"
-  //                 ? item.quantity + 1
-  //                 : item.quantity > 1
-  //                 ? item.quantity - 1
-  //                 : item.quantity,
-  //           }
-  //         : item
-  //     )
-  //   );
-  // };
-
-  // const removeFromCart = (_id) => {
-  //   setCartItems(cartItems.filter((item) => item._id !== _id));
-  // };
-
-  // const getTotal = () => {
-  //   return cartItems.reduce(
-  //     (total, item) => total + item.price * item.quantity,
-  //     0
-  //   );
-  // };
+  const toggleCart = () => setIsCartOpen(!isCartOpen);
 
   return (
     <div style={{ backgroundColor: "#F5F5F5" }}>
@@ -138,21 +137,36 @@ useEffect(() => {
         <div className="cart active">
           <h2 className="cart-title">Your Cart</h2>
           <div className="cart-content">
-            {cartItems.map((item) => (
-              <div className="cart-box" key={item._id}>
-                <img src={item.image} alt="" className="cart-img" />
-                <div className="cart-details">
-                  <h2 className="cart-product-title">{item.name}</h2>
-                  <span className="cart-price">${item.price}</span>
-                  <div className="cart-quantity">
-                    <button onClick={() => updateQuantity(item._id, "dec")}>-</button>
-                    <span className="number">{item.quantity}</span>
-                    <button onClick={() => updateQuantity(item._id, "inc")}>+</button>
-                  </div>
-                </div>
-                <div className="cart-remove" onClick={() => removeFromCart(item._id)}>🗑</div>
-              </div>
-            ))}
+          <div className="cart-content">
+          {cartItems.length > 0 ? (
+  cartItems.map((item) => (
+    <div className="cart-box" key={item._id}>
+      <img
+        src={item.image || "/placeholder.png"}
+        alt={item.name || "Item"}
+        className="cart-img"
+      />
+      <div className="cart-details">
+        <h2 className="cart-product-title">{item.name}</h2>
+        <span className="cart-price">₦{item.price?.toLocaleString()}</span>
+        <div className="cart-quantity">
+          <button onClick={() => updateQuantity(item._id, "dec")}>-</button>
+          <span className="number">{item.quantity}</span>
+          <button onClick={() => updateQuantity(item._id, "inc")}>+</button>
+        </div>
+      </div>
+      <div className="cart-remove" onClick={() => removeFromCart(item._id)}>
+        🗑
+      </div>
+    </div>
+  ))
+) : (
+  <p>Your cart is empty</p>
+)}
+
+
+          </div>
+
             <button
               style={{ width: "10%", height: "8%", border: "none", backgroundColor: "transparent" }}
               onClick={() => setIsCartOpen(false)}
@@ -162,16 +176,21 @@ useEffect(() => {
             </button>
           </div>
           <div className="total">
-            <h3>Total: ${getTotal().toFixed(2)}</h3>
+            <h3>Total: ${getTotald().toFixed(2)}</h3>
           </div>
           <button className="btn-buy">Buy Now</button>
-          <button style={{ borderRadius:"50%", justifySelf:"center",marginLeft:"70px",marginTop:"10px",border:"none"}}>
-          <Link to="/cart" style={{ textDecoration: 'none', color: '#0B0C2A', textAlign:"center"  }}>
-        <div style={{ padding: "10px", cursor: "pointer" ,textDecoration: 'none' }}>View Full Cart</div>
-        </Link>
+          <button style={{
+            borderRadius: "50%",
+            justifySelf: "center",
+            marginLeft: "70px",
+            marginTop: "10px",
+            border: "none"
+          }}>
+            <Link to="/cart" style={{ textDecoration: 'none', color: '#0B0C2A', textAlign: "center" }}>
+              <div style={{ padding: "10px", cursor: "pointer" }}>View Full Cart</div>
+            </Link>
           </button>
         </div>
-        
       )}
     </div>
   );

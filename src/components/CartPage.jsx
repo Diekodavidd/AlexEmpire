@@ -11,6 +11,7 @@ import { useContext } from 'react';
 import { CartContext } from './CartContext';
 import './cart.css'; // Custom styles if needed
 import Header from './Header';
+import {jwtDecode} from 'jwt-decode'; // Import jwt-decode to decode JWT tokens
 
 
 const CartPage = () => {
@@ -20,7 +21,7 @@ const CartPage = () => {
     const [data, setData] = useState();
     
     const [isCartLoaded, setIsCartLoaded] = useState(false); // NEW
-    const { cartItems,setCartItems, addToCart, updateQuantity, removeFromCart, getTotal } = useContext(CartContext);
+    const { cartItems,setCartItems, addToCart, updateQuantity, removeFromCart, getTotal, getTotald } = useContext(CartContext);
    
 
   // Verify customer token
@@ -47,6 +48,44 @@ const CartPage = () => {
    }
    setIsCartLoaded(true); // Mark cart as loaded
  }, []);
+
+ const handleCheckout = async () => {
+  try {
+    const token = localStorage.getItem("existingToke");
+
+    // Decode the token to get userId (you can use a library like `jwt-decode` to decode the token)
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.userId; // Assuming the userId is in the token
+
+    const cleanedCartItems = cartItems.map(item => ({
+      productId: item.productId,
+      quantity: item.quantity
+    }));
+
+    // Send userId along with cart items
+    await axios.post(
+      "https://backend-details-0xik.onrender.com/customer/cart/save",
+      { userId, items: cleanedCartItems },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log("Cart saved successfully!");
+
+    // Clear cart from localStorage and context
+    localStorage.removeItem("cart");
+    setCartItems([]);
+
+    // Navigate to actual checkout route
+    navigate('/checkout');
+  } catch (err) {
+    console.error("Error saving cart:", err);
+  }
+};
+
+
   
     return (
 <>
@@ -76,7 +115,7 @@ const CartPage = () => {
                     <div className="col-8">
                       <div className="card-body">
                         <h5 className="card-title">{item.name}</h5>
-                        <p className="card-text">${item.price}</p>
+                        <p className="card-text">₦{item.price.toLocaleString()}</p>
                         <div className="d-flex align-items-center">
                           <button
                             className="btn btn-outline-dark btn-sm me-2"
@@ -107,8 +146,10 @@ const CartPage = () => {
           </div>
 
           <div className="text-center mt-5">
-            <h4>Total: <span style={{ color: '#D4AF37' }}>₦{getTotal().toFixed(2)}</span></h4>
-            <button className="btn btn-warning mt-3"><Link to='/checkout'> Proceed to Checkout</Link></button>
+            <h4>Total: <span style={{ color: '#D4AF37' }}>₦{getTotald().toFixed(2)}</span></h4>
+            <button className="btn btn-warning mt-3" onClick={handleCheckout}>
+  Proceed to Checkout
+</button>
           </div>
           </>
       )}
